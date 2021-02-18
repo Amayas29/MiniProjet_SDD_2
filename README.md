@@ -1,4 +1,4 @@
-# Mini Projet 02 STructure de données
+# Mini Projet 02 Structure de données
 
 **Membre du binome**
 
