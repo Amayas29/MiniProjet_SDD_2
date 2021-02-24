@@ -17,7 +17,12 @@ int main(int argc, char **argv) {
 
     int lignes = atoi(argv[1]);
     Biblio *biblio = charger_n_entrees(argv[0], lignes);
-    
+
+    if(!biblio) {
+        print_probleme("Pointeur non valide");
+        return 1;
+    }
+
     int choix;
 
     while(1) {

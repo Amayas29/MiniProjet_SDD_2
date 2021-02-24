@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include <string.h>
+#include "commun.h"
 #include "entreeSortieLC.h"
 #include "UIfonctions.h"
+
+static void rechercher_livre_numero(Biblio *biblio);
+static void rechercher_livre_titre(Biblio *biblio);
+static void recherche_livres_auteur(Biblio *biblio);
+static void recherche_ouvrages_exemplaire(Biblio *biblio);
 
 void menu() {
     printf("\t:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"\
@@ -71,6 +77,11 @@ int saisir_int(char *message) {
 }
 
 void rechercher(Biblio *biblio) {
+    if(!biblio) {
+        print_probleme("Pointeur non valide");
+        return;
+    }
+
     int choix;
     menu_recherche();
     choix = get_choix(0, 5);
@@ -86,7 +97,7 @@ void rechercher(Biblio *biblio) {
     }
 }
 
-void rechercher_livre_numero(Biblio *biblio) {
+static void rechercher_livre_numero(Biblio *biblio) {
     int numero = saisir_int("\n\t - Entrer le numero de l'ouverage : ");
     printf("\n");
 
@@ -100,7 +111,7 @@ void rechercher_livre_numero(Biblio *biblio) {
     printf("\n");
 }
 
-void rechercher_livre_titre(Biblio *biblio) {
+static void rechercher_livre_titre(Biblio *biblio) {
     printf("\n\t - Veuillez saisir le titre du livre : ");
     char nom[BUFSIZ];
     fgets(nom, BUFSIZ, stdin);
@@ -118,7 +129,7 @@ void rechercher_livre_titre(Biblio *biblio) {
     printf("\n");
 }
 
-void recherche_livres_auteur(Biblio *biblio) {
+static void recherche_livres_auteur(Biblio *biblio) {
     printf("\n\t - Veuillez saisir l'auteur des livres : ");
 
     char auteur[BUFSIZ];
@@ -139,7 +150,7 @@ void recherche_livres_auteur(Biblio *biblio) {
     printf("\n");
 }
 
-void recherche_ouvrages_exemplaire(Biblio *biblio){
+static void recherche_ouvrages_exemplaire(Biblio *biblio) {
     Biblio *new = rechercher_exemplaires(biblio);
 
     if(!new || !new->livres) {
@@ -191,5 +202,8 @@ void recherche_ouvrages_exemplaire(Biblio *biblio){
 }
 
 void supprimer(Biblio *biblio) {
-    
+    if(!biblio) {
+        print_probleme("Pointeur non valide");
+        return;
+    }
 }
