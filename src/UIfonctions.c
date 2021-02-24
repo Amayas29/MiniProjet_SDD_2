@@ -207,3 +207,10 @@ void supprimer(Biblio *biblio) {
         return;
     }
 }
+
+void ajout(Biblio *biblio){
+    if(!biblio) {
+        print_probleme("Pointeur non valide");
+        return;
+    }
+}

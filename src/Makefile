@@ -16,7 +16,7 @@ biblioLC.o : biblioLC.c biblioLC.h commun.h
 entreeSortieLC.o : entreeSortieLC.c entreeSortieLC.h commun.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-UIfonctions.o : UIfonctions.c UIfonctions.h entreeSortieLC.h biblioLC.h
+UIfonctions.o : UIfonctions.c UIfonctions.h entreeSortieLC.h biblioLC.h commun.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean :
