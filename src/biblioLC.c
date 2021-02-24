@@ -213,3 +213,14 @@ Biblio *rechercher_exemplaires(Biblio *biblio) {
 
     return new_biblio;
 }
+
+int existe(Biblio *biblio, int numero, char *titre, char *auteur) {
+    if(!biblio)
+        return 0;
+
+    for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
+        if(compare_livres(livre, numero, titre, auteur))
+            return 1;
+    
+    return 0;
+}
