@@ -142,6 +142,10 @@ Biblio *rechercher_biblio_auteur(Biblio *biblio, char *auteur) {
     return new;
 }
 
+static int compare_livres(Livre *livre, int numero, char *titre, char *auteur) {
+    return livre && livre->num == numero && strcmp(livre->titre, titre) == 0 && strcmp(livre->auteur, auteur) == 0; 
+}
+
 void suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur) {
     
     if(!biblio) {
@@ -174,12 +178,38 @@ void fusion_biblios(Biblio *src, Biblio *dest) {
         return;
     }
 
-    for(Livre *livre = dest->livres; livre; livre = livre->suiv)
-        inserer_en_tete(src, livre->num, livre->titre, livre->auteur);
-    
+    int add;
+    for(Livre *livre = dest->livres; livre; livre = livre->suiv) {
+        add = 1;
+        for(Livre *tete = src->livres; tete; tete = tete->suiv) {
+            if(compare_livres(livre, tete->num, tete->titre, tete->auteur)) {
+                add = 0;
+                break;
+            }
+        }
+        if(add)
+            inserer_en_tete(src, livre->num, livre->titre, livre->auteur);
+    }
     liberer_biblio(dest);
 }
 
-static int compare_livres(Livre *livre, int numero, char *titre, char *auteur) {
-    return livre && livre->num == numero && strcmp(livre->titre, titre) == 0 && strcmp(livre->auteur, auteur) == 0; 
+Biblio *rechercher_exemplaires(Biblio *biblio) {
+
+    Biblio *new_biblio = creer_biblio();
+
+    if(!new_biblio)
+        return NULL;
+
+    for(Livre *livre = biblio->livres; livre; livre = livre->suiv) {
+        for(Livre *suivant = biblio->livres; suivant; suivant = suivant->suiv) {
+            
+            if(suivant == livre)
+                continue;
+            
+            if(compare_livres(livre, suivant->num, suivant->titre, suivant->auteur))
+                inserer_en_tete(new_biblio, suivant->num, suivant->titre, suivant->auteur);
+        }
+    }
+
+    return new_biblio;
 }
