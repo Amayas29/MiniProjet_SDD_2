@@ -9,6 +9,11 @@ static void menu_recherche();
 static void menu_output();
 static int get_choix(int min, int max);
 static int saisir_int(char *message);
+static void rechercher(Biblio *biblio);
+static void rechercher_livre_numero(Biblio *biblio);
+static void rechercher_livre_titre(Biblio *biblio);
+static void recherche_livres_auteur(Biblio *biblio);
+static void recherche_ouvrages_exemplaire(Biblio *biblio);
 
 int main(int argc, char **argv) {
 
@@ -34,90 +39,7 @@ int main(int argc, char **argv) {
 
         switch (choix) {
             case 1: afficher_biblio(biblio); break;
-            
-            case 2: {
-                menu_recherche();
-                choix = get_choix(0, 5);
-
-                if(choix == 0)
-                    break;
-                    
-                switch (choix) {
-                    case 1: {
-                        int numero = saisir_int("\n\t - Entrer le numero de l'ouverage : ");
-                        printf("\n");
-
-                        Livre *livre = rechercher_biblio_numero(biblio, numero);
-                        if(!livre) {
-                            printf("\t >> Livre inexistant\n\n");
-                            break;
-                        }
-                            
-                        printf("\t >> ");
-                        afficher_livre(livre);
-                        printf("\n");
-
-                        break;
-                    }
-
-                    case 2: {
-                        printf("\n\t - Veuillez saisir le titre du livre : ");
-                        char nom[BUFSIZ];
-                        fgets(nom, BUFSIZ, stdin);
-                        printf("\n");
-                            
-                        nom[strlen(nom)-1] = '\0';
-
-                        Livre *livre = rechercher_biblio_titre(biblio, nom);
-                        if(!livre) {
-                            printf("\t >> Livre inexistant\n\n");
-                            break;
-                        }
-
-                        printf("\t >> ");
-                        afficher_livre(livre);
-                        printf("\n");
-
-                        break;
-                    }
-
-                    case 3: {
-                        printf("\n\t - Veuillez saisir l'auteur du livre : ");
-                        char auteur[BUFSIZ];
-                        fgets(auteur,BUFSIZ,stdin);
-                        printf("\n");
-                            
-                        auteur[strlen(auteur)-1] = '\0';
-
-                        Biblio *bib = rechercher_biblio_auteur(biblio, auteur);
-                        if(!bib || !bib->livres) {
-                            printf("\t >> Livre inexistant\n\n");
-                            break;
-                        }
-                        
-                        printf("\t >> Les livres de l'auteurs : \n");
-                        afficher_biblio(bib);
-                        printf("\n");
-
-                        break;
-                    }
-
-                    case 4: {
-                        Biblio *new = rechercher_exemplaires(biblio);
-
-                        if(!new) {
-                            printf("\t >> Aucun livres trouves\n\n");
-                            break;
-                        }
-
-                        menu_output();
-                        choix = get_choix(1, 4);
-                        break;
-                    }
-                }
-                break;
-            }
-
+            case 2: rechercher(biblio); break;
             case 3: break;
             case 4: break;
             case 5: break;
@@ -194,3 +116,81 @@ static int saisir_int(char *message) {
 
     return saisie;
 }
+
+static void rechercher(Biblio *biblio){
+    int choix;
+    menu_recherche();
+    choix = get_choix(0, 5);
+
+    if(choix == 0)
+        return;
+                
+    switch (choix) {
+        case 1: rechercher_livre_numero(biblio); break;
+        case 2: rechercher_livre_titre(biblio); break;
+        case 3: recherche_livres_auteur(biblio); break;
+        case 4:recherche_ouvrages_exemplaire(biblio); break;
+    }
+}
+
+static void rechercher_livre_numero(Biblio *biblio){
+    int numero = saisir_int("\n\t - Entrer le numero de l'ouverage : ");
+    printf("\n");
+
+    Livre *livre = rechercher_biblio_numero(biblio, numero);
+    if(!livre) {
+        printf("\t >> Livre inexistant\n\n");
+        return;
+    }
+                            
+    printf("\t >> ");
+    afficher_livre(livre);
+    printf("\n");
+
+}
+
+static void rechercher_livre_titre(Biblio *biblio){
+    printf("\n\t - Veuillez saisir le titre du livre : ");
+    char nom[BUFSIZ];
+    fgets(nom, BUFSIZ, stdin);
+    printf("\n");
+        
+    nom[strlen(nom)-1] = '\0';
+
+    Livre *livre = rechercher_biblio_titre(biblio, nom);
+    if(!livre) {
+        printf("\t >> Livre inexistant\n\n");
+        return;
+    }
+
+    printf("\t >> ");
+    afficher_livre(livre);
+    printf("\n");
+
+}
+
+
+static void recherche_livres_auteur(Biblio *biblio){
+    printf("\n\t - Veuillez saisir l'auteur du livre : ");
+    char auteur[BUFSIZ];
+    fgets(auteur,BUFSIZ,stdin);
+    printf("\n");
+        
+    auteur[strlen(auteur)-1] = '\0';
+
+    Biblio *bib = rechercher_biblio_auteur(biblio, auteur);
+    if(!bib || !bib->livres) {
+        printf("\t >> Livre inexistant\n\n");
+       return;
+    }
+    
+    printf("\t >> Les livres de l'auteurs : \n");
+    afficher_biblio(bib);
+    printf("\n");
+
+   
+}
+
+static void recherche_ouvrages_exemplaire(Biblio *biblio){
+    
+} 
