@@ -25,15 +25,13 @@ Biblio *charger_n_entrees(char *nomfic, int nombre_lignes) {
 
     for(int ligne = 0; ligne < nombre_lignes && fgets(BUFFER, 512, file); ligne++) {
 
-        if(sscanf(BUFFER, "%d %s %s", &numero, titre, auteur) != 3) {
+        if(sscanf(BUFFER, "%d %s %s\n", &numero, titre, auteur) != 3) {
             print_probleme("Erreur de lecture depuis le fichiers");
             fclose(file);
             liberer_biblio(biblio);
             return NULL;
         }
 
-        titre[strlen(titre) - 1] = '\0';
-        auteur[strlen(auteur) - 1] = '\0';
         inserer_en_tete(biblio, numero, titre, auteur);
     }
 

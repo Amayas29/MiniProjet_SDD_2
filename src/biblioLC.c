@@ -40,7 +40,7 @@ void afficher_livre(Livre *livre) {
         return;
     }
     
-    printf("%d %s %s\n", livre->num, livre->titre, livre->auteur);
+    printf("\t >> %d %s %s\n", livre->num, livre->titre, livre->auteur);
 }
 
 Biblio *creer_biblio() {
@@ -206,7 +206,7 @@ Biblio *rechercher_exemplaires(Biblio *biblio) {
             if(suivant == livre)
                 continue;
             
-            if(compare_livres(livre, suivant->num, suivant->titre, suivant->auteur))
+            if(strcmp(livre->titre, suivant->titre) == 0 && strcmp(livre->auteur, suivant->auteur) == 0)
                 inserer_en_tete(new_biblio, suivant->num, suivant->titre, suivant->auteur);
         }
     }
