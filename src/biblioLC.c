@@ -118,7 +118,7 @@ Livre *rechercher_biblio_titre(Biblio *biblio, char *titre) {
     }
 
     Livre *livre = biblio->livres;
-    for(; livre && strcmp(livre->titre, titre) == 0; livre = livre->suiv);
+    for(; livre && strcmp(livre->titre, titre) != 0; livre = livre->suiv);
 
     return livre;
 }

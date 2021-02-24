@@ -1,13 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "commun.h"
 #include "entreeSortieLC.h"
 
 static void menu();
 static void menu_recherche();
 static void menu_output();
-static int get_choix();
-static int saisir_int();
+static int get_choix(int min, int max);
+static int saisir_int(char *message);
 
 int main(int argc, char **argv) {
 
@@ -26,7 +27,7 @@ int main(int argc, char **argv) {
 
     while(1) {
         menu();
-        choix = get_choix(6);
+        choix = get_choix(0, 6);
 
         if(choix == 0)
             break;
@@ -35,18 +36,83 @@ int main(int argc, char **argv) {
             case 1: afficher_biblio(biblio); break;
             
             case 2: {
-                while(1) {
-                    menu_recherche();
-                    choix = get_choix(5);
+                menu_recherche();
+                choix = get_choix(0, 5);
 
-                    if(choix == 0)
-                        break;
+                if(choix == 0)
+                    break;
                     
-                    switch (choix) {
-                        case 1: break;
-                        case 2: break;
-                        case 3: break;
-                        case 4: break;
+                switch (choix) {
+                    case 1: {
+                        int numero = saisir_int("\n\t - Entrer le numero de l'ouverage : ");
+                        printf("\n");
+
+                        Livre *livre = rechercher_biblio_numero(biblio, numero);
+                        if(!livre) {
+                            printf("\t >> Livre inexistant\n\n");
+                            break;
+                        }
+                            
+                        printf("\t >> ");
+                        afficher_livre(livre);
+                        printf("\n");
+
+                        break;
+                    }
+
+                    case 2: {
+                        printf("\n\t - Veuillez saisir le titre du livre : ");
+                        char nom[BUFSIZ];
+                        fgets(nom, BUFSIZ, stdin);
+                        printf("\n");
+                            
+                        nom[strlen(nom)-1] = '\0';
+
+                        Livre *livre = rechercher_biblio_titre(biblio, nom);
+                        if(!livre) {
+                            printf("\t >> Livre inexistant\n\n");
+                            break;
+                        }
+
+                        printf("\t >> ");
+                        afficher_livre(livre);
+                        printf("\n");
+
+                        break;
+                    }
+
+                    case 3: {
+                        printf("\n\t - Veuillez saisir l'auteur du livre : ");
+                        char auteur[BUFSIZ];
+                        fgets(auteur,BUFSIZ,stdin);
+                        printf("\n");
+                            
+                        auteur[strlen(auteur)-1] = '\0';
+
+                        Biblio *bib = rechercher_biblio_auteur(biblio, auteur);
+                        if(!bib || !bib->livres) {
+                            printf("\t >> Livre inexistant\n\n");
+                            break;
+                        }
+                        
+                        printf("\t >> Les livres de l'auteurs : \n");
+                        afficher_biblio(bib);
+                        printf("\n");
+
+                        break;
+                    }
+
+                    case 4: {
+                        Biblio *new = rechercher_exemplaires(biblio);
+
+                        if(!new) {
+                            printf("\t >> Aucun livres trouves\n\n");
+                            break;
+                        }
+
+                        menu_output();
+                        choix = get_choix(1, 4);
+                        break;
                     }
                 }
                 break;
@@ -103,11 +169,11 @@ static void menu_output() {
            "\t:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
 }
 
-static int get_choix(int max) {
+static int get_choix(int min, int max) {
 
     int choix = -1;
 
-    while(choix < 0 || choix >= max)
+    while(choix < min || choix >= max)
         choix = saisir_int("\n\t\t - Votre choix : ");
 
     printf("\n");
