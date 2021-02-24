@@ -13,5 +13,5 @@ void rechercher_livre_numero(Biblio *biblio);
 void rechercher_livre_titre(Biblio *biblio);
 void recherche_livres_auteur(Biblio *biblio);
 void recherche_ouvrages_exemplaire(Biblio *biblio);
-
+void supprimer(Biblio *biblio);
 #endif

@@ -82,7 +82,7 @@ void rechercher(Biblio *biblio) {
         case 1: rechercher_livre_numero(biblio); break;
         case 2: rechercher_livre_titre(biblio); break;
         case 3: recherche_livres_auteur(biblio); break;
-        case 4:recherche_ouvrages_exemplaire(biblio); break;
+        case 4: recherche_ouvrages_exemplaire(biblio); break;
     }
 }
 
@@ -188,4 +188,8 @@ void recherche_ouvrages_exemplaire(Biblio *biblio){
             break;
         }
     }
-} 
+}
+
+void supprimer(Biblio *biblio) {
+    
+}
