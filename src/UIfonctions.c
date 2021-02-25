@@ -214,11 +214,11 @@ void supprimer(Biblio *biblio) {
     
     numero = saisir_int("\n\t - Veuillez inserer le numero du livre : ");
    
-    printf("\n\t - Veuillez inserer le titre du livre :");
+    printf("\n\t - Veuillez inserer le titre du livre : ");
     fgets(titre, BUFSIZ, stdin);
     titre[strlen(titre)-1] = '\0';
    
-    printf("\n\t - Veuillez inserer l'auteur du livre :");
+    printf("\n\t - Veuillez inserer l'auteur du livre : ");
     fgets(auteur, BUFSIZ, stdin);
     auteur[strlen(auteur)-1] = '\0';
 
@@ -238,11 +238,11 @@ void ajouter(Biblio *biblio) {
     
     numero = saisir_int("\n\t - Veuillez inserer le numero du livre : ");
    
-    printf("\n\t - Veuillez inserer le titre du livre :");
+    printf("\n\t - Veuillez inserer le titre du livre : ");
     fgets(titre, BUFSIZ, stdin);
     titre[strlen(titre)-1] = '\0';
    
-    printf("\n\t - Veuillez inserer l'auteur du livre :");
+    printf("\n\t - Veuillez inserer l'auteur du livre : ");
     fgets(auteur, BUFSIZ, stdin);
     auteur[strlen(auteur)-1] = '\0';
 

@@ -164,7 +164,7 @@ void suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur)
     for(; curr && !compare_livres(curr->suiv, numero, titre, auteur); curr = curr->suiv);
 
     Livre *sup = NULL;
-    if(!curr) {
+    if(curr) {
         sup = curr->suiv;
         curr->suiv = sup->suiv;
         liberer_livre(sup);
