@@ -23,10 +23,12 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    printf("\n\t ** Bienvenu : \n\n");
+
     int choix;
 
     while(1) {
-        
+
         printf("\t\t==================================================\n\n");
 
         menu();
@@ -53,5 +55,6 @@ int main(int argc, char **argv) {
     }
 
     liberer_biblio(biblio);
+    printf("\n\t ** Merci au revoir\n");
     return 0;
 }
