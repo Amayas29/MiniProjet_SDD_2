@@ -206,11 +206,46 @@ void supprimer(Biblio *biblio) {
         print_probleme("Pointeur non valide");
         return;
     }
+    
+    int numero;
+    char titre[BUFSIZ];
+    char auteur[BUFSIZ];
+    
+    numero = saisir_int("veuillez inserer le numero du livre");
+   
+    printf("\n\t\t - veuillez inserer le titre du livre :");
+    fgets(titre,BUFSIZ,stdin);
+    titre[strlen(titre)-1] = '\0';
+   
+    printf("\n\t\t - veuillez inserer l'auteur du livre :");
+    fgets(auteur,BUFSIZ,stdin);
+    auteur[strlen(auteur)-1] = '\0';
+
+    suppression_ouverage(biblio,numero,titre,auteur);
+
 }
 
-void ajout(Biblio *biblio){
+void ajout(Biblio *biblio) {
     if(!biblio) {
         print_probleme("Pointeur non valide");
         return;
     }
+    int numero;
+    char titre[BUFSIZ];
+    char auteur[BUFSIZ];
+    
+    numero = saisir_int("veuillez inserer le numero du livre");
+   
+    printf("\n\t\t - veuillez inserer le titre du livre :");
+    fgets(titre,BUFSIZ,stdin);
+    titre[strlen(titre)-1] = '\0';
+   
+    printf("\n\t\t - veuillez inserer l'auteur du livre :");
+    fgets(auteur,BUFSIZ,stdin);
+    auteur[strlen(auteur)-1] = '\0';
+
+    if(!existe(biblio,numero,titre,auteur)){
+        inserer_en_tete(biblio,numero,titre,auteur);
+    }
+
 }
