@@ -10,6 +10,7 @@ int get_choix(int min, int max);
 int saisir_int(char *message);
 void rechercher(Biblio *biblio);
 void supprimer(Biblio *biblio);
-void ajout(Biblio *biblio);
+void ajouter(Biblio *biblio);
+void fusionner(Biblio *biblio);
 
 #endif

@@ -202,6 +202,7 @@ static void recherche_ouvrages_exemplaire(Biblio *biblio) {
 }
 
 void supprimer(Biblio *biblio) {
+
     if(!biblio) {
         print_probleme("Pointeur non valide");
         return;
@@ -211,41 +212,59 @@ void supprimer(Biblio *biblio) {
     char titre[BUFSIZ];
     char auteur[BUFSIZ];
     
-    numero = saisir_int("veuillez inserer le numero du livre");
+    numero = saisir_int("\n\t - Veuillez inserer le numero du livre : ");
    
-    printf("\n\t\t - veuillez inserer le titre du livre :");
-    fgets(titre,BUFSIZ,stdin);
+    printf("\n\t - Veuillez inserer le titre du livre :");
+    fgets(titre, BUFSIZ, stdin);
     titre[strlen(titre)-1] = '\0';
    
-    printf("\n\t\t - veuillez inserer l'auteur du livre :");
-    fgets(auteur,BUFSIZ,stdin);
+    printf("\n\t - Veuillez inserer l'auteur du livre :");
+    fgets(auteur, BUFSIZ, stdin);
     auteur[strlen(auteur)-1] = '\0';
 
-    suppression_ouverage(biblio,numero,titre,auteur);
-
+    suppression_ouverage(biblio, numero, titre, auteur);
 }
 
-void ajout(Biblio *biblio) {
+void ajouter(Biblio *biblio) {
+
     if(!biblio) {
         print_probleme("Pointeur non valide");
         return;
     }
+
     int numero;
     char titre[BUFSIZ];
     char auteur[BUFSIZ];
     
-    numero = saisir_int("veuillez inserer le numero du livre");
+    numero = saisir_int("\n\t - Veuillez inserer le numero du livre : ");
    
-    printf("\n\t\t - veuillez inserer le titre du livre :");
-    fgets(titre,BUFSIZ,stdin);
+    printf("\n\t - Veuillez inserer le titre du livre :");
+    fgets(titre, BUFSIZ, stdin);
     titre[strlen(titre)-1] = '\0';
    
-    printf("\n\t\t - veuillez inserer l'auteur du livre :");
-    fgets(auteur,BUFSIZ,stdin);
+    printf("\n\t - Veuillez inserer l'auteur du livre :");
+    fgets(auteur, BUFSIZ, stdin);
     auteur[strlen(auteur)-1] = '\0';
 
-    if(!existe(biblio,numero,titre,auteur)){
-        inserer_en_tete(biblio,numero,titre,auteur);
-    }
+    if(!existe(biblio, numero, titre, auteur))
+        inserer_en_tete(biblio, numero, titre, auteur);
+}
 
+void fusionner(Biblio *biblio) {
+
+    printf("\n\t - Veuillez saisir le nom du fichier : ");
+    char nom_fic[BUFSIZ];
+    fgets(nom_fic, BUFSIZ, stdin);
+    printf("\n");
+
+    nom_fic[strlen(nom_fic)-1] = '\0';
+
+    int lignes = saisir_int("\n\t - Veuillez saisir le nombre de lignes : ");
+
+    Biblio *new = charger_n_entrees(nom_fic, lignes);
+
+    if(!new)
+        return;
+
+    fusion_biblios(biblio, new);
 }

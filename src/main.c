@@ -42,8 +42,10 @@ int main(int argc, char **argv) {
             case 2: rechercher(biblio); break;
 
             case 3: supprimer(biblio); break;
-            case 4: break;
-            case 5: break;
+
+            case 4: ajouter(biblio); break;
+            
+            case 5: fusionner(biblio); break;
         }
     }
 
