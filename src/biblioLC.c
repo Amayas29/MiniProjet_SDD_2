@@ -146,11 +146,11 @@ static int compare_livres(Livre *livre, int numero, char *titre, char *auteur) {
     return livre && livre->num == numero && strcmp(livre->titre, titre) == 0 && strcmp(livre->auteur, auteur) == 0; 
 }
 
-void suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur) {
+int suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur) {
     
     if(!biblio) {
         print_probleme("Pointeur non valide");
-        return;
+        return 0;
     }
 
     Livre *curr = biblio->livres;
@@ -158,7 +158,7 @@ void suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur)
     if(compare_livres(biblio->livres, numero, titre, auteur)) {
         biblio->livres = curr->suiv;
         liberer_livre(curr);
-        return;
+        return 1;
     }
 
     for(; curr && !compare_livres(curr->suiv, numero, titre, auteur); curr = curr->suiv);
@@ -168,7 +168,10 @@ void suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur)
         sup = curr->suiv;
         curr->suiv = sup->suiv;
         liberer_livre(sup);
+        return 1;
     }
+
+    return 0;
 }
 
 void fusion_biblios(Biblio *src, Biblio *dest) {

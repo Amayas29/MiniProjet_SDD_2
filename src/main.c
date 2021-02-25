@@ -26,6 +26,9 @@ int main(int argc, char **argv) {
     int choix;
 
     while(1) {
+        
+        printf("\t\t==================================================\n\n");
+
         menu();
         choix = get_choix(0, 6);
 
@@ -44,7 +47,7 @@ int main(int argc, char **argv) {
             case 3: supprimer(biblio); break;
 
             case 4: ajouter(biblio); break;
-            
+
             case 5: fusionner(biblio); break;
         }
     }

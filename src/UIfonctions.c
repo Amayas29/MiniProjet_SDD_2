@@ -142,12 +142,14 @@ static void recherche_livres_auteur(Biblio *biblio) {
     Biblio *bib = rechercher_biblio_auteur(biblio, auteur);
     if(!bib || !bib->livres) {
         printf("\t >> Aucun livres trouves\n\n");
-       return;
+        liberer_biblio(bib);
+        return;
     }
     
     printf("\t >> Les livres de l'auteurs : \n\n");
     afficher_biblio(bib);
     printf("\n");
+    liberer_biblio(bib);
 }
 
 static void recherche_ouvrages_exemplaire(Biblio *biblio) {
@@ -155,6 +157,7 @@ static void recherche_ouvrages_exemplaire(Biblio *biblio) {
 
     if(!new || !new->livres) {
         printf("\t >> Aucun livres trouves\n\n");
+        liberer_biblio(new);
         return;
     }
 
@@ -165,7 +168,6 @@ static void recherche_ouvrages_exemplaire(Biblio *biblio) {
         case 1: {
             afficher_biblio(new);
             printf("\n");
-            liberer_biblio(new);
             break;
         }
 
@@ -178,7 +180,6 @@ static void recherche_ouvrages_exemplaire(Biblio *biblio) {
             nom_fic[strlen(nom_fic)-1] = '\0';
 
             enregister_biblio(new, nom_fic);
-            liberer_biblio(new);
             break;
         }
 
@@ -195,10 +196,11 @@ static void recherche_ouvrages_exemplaire(Biblio *biblio) {
             nom_fic[strlen(nom_fic)-1] = '\0';
 
             enregister_biblio(new, nom_fic);
-            liberer_biblio(new);
             break;
         }
     }
+
+    liberer_biblio(new);
 }
 
 void supprimer(Biblio *biblio) {
@@ -222,7 +224,12 @@ void supprimer(Biblio *biblio) {
     fgets(auteur, BUFSIZ, stdin);
     auteur[strlen(auteur)-1] = '\0';
 
-    suppression_ouverage(biblio, numero, titre, auteur);
+    if(suppression_ouverage(biblio, numero, titre, auteur)) {
+        printf("\n\t >> La suppresion est bien effectuee\n\n");
+        return;
+    }
+
+    printf("\n\t >> La suppresion c'est mal passee\n\n");
 }
 
 void ajouter(Biblio *biblio) {
@@ -246,8 +253,13 @@ void ajouter(Biblio *biblio) {
     fgets(auteur, BUFSIZ, stdin);
     auteur[strlen(auteur)-1] = '\0';
 
-    if(!existe(biblio, numero, titre, auteur))
+    if(!existe(biblio, numero, titre, auteur)) {
         inserer_en_tete(biblio, numero, titre, auteur);
+        printf("\n");
+        return;
+    }
+
+    printf("\n\t - Livre deja existant\n");
 }
 
 void fusionner(Biblio *biblio) {

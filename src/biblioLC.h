@@ -25,7 +25,7 @@ void afficher_biblio(Biblio *biblio);
 Livre *rechercher_biblio_numero(Biblio *biblio, int numero);
 Livre *rechercher_biblio_titre(Biblio *biblio, char *titre);
 Biblio *rechercher_biblio_auteur(Biblio *biblio, char *auteur);
-void suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur);
+int suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur);
 void fusion_biblios(Biblio *src, Biblio *dest);
 Biblio *rechercher_exemplaires(Biblio *biblio);
 int existe(Biblio *biblio, int numero, char *titre, char *auteur);
