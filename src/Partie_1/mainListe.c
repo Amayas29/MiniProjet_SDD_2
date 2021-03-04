@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "commun.h"
+#include "../commun.h"
 #include "entreeSortieLC.h"
 #include "UIfonctions.h"
 

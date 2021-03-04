@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "commun.h"
-#include "entreeSortieLC.h"
+#include "entreeSortieHach.h"
 
-Biblio *charger_n_entrees(char *nomfic, int nombre_lignes) {
+BiblioH *charger_n_entrees(char *nomfic, int nombre_lignes) {
 
     FILE *file = fopen(nomfic, "r");
     if(!file) {
@@ -12,11 +12,11 @@ Biblio *charger_n_entrees(char *nomfic, int nombre_lignes) {
         return NULL;
     }
 
-    Biblio *biblio = creer_biblio();
-    if(!biblio) {
-        fclose(file);
-        return NULL;
-    }
+    // Biblio *biblio = creer_biblio();
+    // if(!biblio) {
+    //     fclose(file);
+    //     return NULL;
+    // }
 
     char BUFFER[512];
     int numero;
@@ -28,18 +28,18 @@ Biblio *charger_n_entrees(char *nomfic, int nombre_lignes) {
         if(sscanf(BUFFER, "%d %s %s\n", &numero, titre, auteur) != 3) {
             print_probleme("Erreur de lecture depuis le fichiers");
             fclose(file);
-            liberer_biblio(biblio);
+            // liberer_biblio(biblio);
             return NULL;
         }
 
-        inserer_en_tete(biblio, numero, titre, auteur);
+        // inserer_en_tete(biblio, numero, titre, auteur);
     }
 
     fclose(file);
-    return biblio;
+    // return biblio;
 }
 
-void enregister_biblio(Biblio *biblio, char *nomfic) {
+void enregister_biblio(BiblioH *biblio, char *nomfic) {
 
     if(!biblio) {
         print_probleme("Pointeur non valide");
@@ -52,8 +52,8 @@ void enregister_biblio(Biblio *biblio, char *nomfic) {
         return;
     }
 
-    for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
-        fprintf(file, "%d %s %s\n", livre->num, livre->titre, livre->auteur);
+    // for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
+    //     fprintf(file, "%d %s %s\n", livre->num, livre->titre, livre->auteur);
     
     fclose(file);
 }

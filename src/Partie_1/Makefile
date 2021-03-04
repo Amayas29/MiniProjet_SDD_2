@@ -1,13 +1,15 @@
 CFLAGS = -Wall -g
 CC = gcc
-PROGS = main
+PROGS = mainListe
 
 all : $(PROGS)
 
-main : biblioLC.o entreeSortieLC.o UIfonctions.o main.o
+# --------------------------------------------
+
+mainListe : biblioLC.o entreeSortieLC.o UIfonctions.o mainListe.o
 	$(CC) $(CFLAGS) -o $@ $^
 
-main.o : main.c entreeSortieLC.h commun.h
+mainListe.o : mainListe.c entreeSortieLC.h commun.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 biblioLC.o : biblioLC.c biblioLC.h commun.h
@@ -18,6 +20,8 @@ entreeSortieLC.o : entreeSortieLC.c entreeSortieLC.h commun.h
 
 UIfonctions.o : UIfonctions.c UIfonctions.h entreeSortieLC.h biblioLC.h commun.h
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+# --------------------------------------------
 
 clean :
 	rm -rf $(PROGS) *.o

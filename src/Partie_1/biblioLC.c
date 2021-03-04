@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "commun.h"
+#include "../commun.h"
 #include "biblioLC.h"
 
 Livre *creer_livre(int num, char *titre, char *auteur) {
