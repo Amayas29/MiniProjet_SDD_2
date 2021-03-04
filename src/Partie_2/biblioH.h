@@ -24,4 +24,14 @@ BiblioH *creer_biblio(int taille);
 void liberer_biblio(BiblioH *biblio);
 void inserer(BiblioH *biblio, int num, char *titre, char *auteur);
 
+void afficher_biblio(BiblioH *biblio);
+
+LivreH *rechercher_biblio_numero(BiblioH *biblio, int numero);
+LivreH *rechercher_biblio_titre(BiblioH *biblio, char *titre);
+LivreH *rechercher_biblio_auteur(BiblioH *biblio, char *auteur);
+int suppression_ouverage(BiblioH *biblio, int numero, char *titre, char *auteur);
+void fusion_biblios(BiblioH *src, BiblioH *dest);
+LivreH *rechercher_exemplaires(BiblioH *biblio);
+int existe(BiblioH *biblio, int numero, char *titre, char *auteur);
+
 #endif

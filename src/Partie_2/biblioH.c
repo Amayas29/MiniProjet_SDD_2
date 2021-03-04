@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "biblioH.h"
 #include "../commun.h"
@@ -37,7 +38,7 @@ LivreH* creer_livre(int num, char *titre, char *auteur) {
 
     livre->clef = fonction_clef(auteur);
     livre->num = num;
-    livre->titre = strup(titre);
+    livre->titre = strdup(titre);
     livre->auteur = strdup(auteur);
     livre->suivant = NULL;
 
@@ -112,4 +113,145 @@ void inserer(BiblioH *biblio, int num, char *titre, char *auteur) {
 
     livre->suivant = biblio->tab[indice];
     biblio->tab[indice] = livre;    
+    biblio->nombresElems ++;
+}
+
+LivreH *rechercher_biblio_numero(BiblioH *biblio, int numero) {
+
+    if(!biblio || !biblio->tab) {
+        print_probleme("Pointeur non valide");
+        return NULL;
+    }
+
+    for(int i = 0; i < biblio->taille; i++)
+        for(LivreH *livre = biblio->tab[ i ]; livre; livre = livre->suivant)
+            if(livre->num == numero)
+                return livre;
+
+    return NULL;
+}
+
+LivreH *rechercher_biblio_titre(BiblioH *biblio, char *titre) {
+
+    if(!biblio || !biblio->tab) {
+        print_probleme("Pointeur non valide");
+        return NULL;
+    }
+
+    for(int i = 0; i < biblio->taille; i++)
+        for(LivreH *livre = biblio->tab[ i ]; livre; livre = livre->suivant)
+            if(strcmp(livre->titre, titre) == 0)
+                return livre;
+
+    return NULL;
+}
+
+LivreH *rechercher_biblio_auteur(BiblioH *biblio, char *auteur) {
+
+    if(!biblio || !biblio->tab) {
+        print_probleme("Pointeur non valide");
+        return NULL;
+    }
+
+    int indice = fonction_hachage(fonction_clef(auteur), biblio->taille);
+
+    return biblio->tab[indice];
+}
+static int compare_livres(LivreH *livre, int numero, char *titre) {
+    return livre && livre->num == numero && strcmp(livre->titre, titre);
+}
+
+int suppression_ouverage(BiblioH *biblio, int numero, char *titre, char *auteur) {
+    
+    if(!biblio || !biblio->tab) {
+        print_probleme("Pointeur non valide");
+        return 0;
+    }
+
+    int indice = fonction_hachage(fonction_clef(auteur), biblio->taille);
+
+    LivreH *livres = biblio->tab[indice];
+
+    if(!livres)
+        return 0;
+  
+    if(livres->num == numero && strcmp(livres->titre, titre) == 0) {
+        biblio->tab[indice] = biblio->tab[indice]->suivant;
+        liberer_livre(livres);
+        return 1;
+    }
+
+    for(; livres && !compare_livres(livres->suivant, numero, titre); livres = livres->suivant);
+
+    LivreH *sup = NULL;
+    if(livres) {
+        sup = livres->suivant;
+        livres->suivant = sup->suivant;
+        liberer_livre(sup);
+        return 1;
+    }
+
+    return 0;
+}
+
+void fusion_biblios(BiblioH *dest, BiblioH *src) {
+
+    if(!src || !dest || !src->tab || !dest->tab) {
+        print_probleme("Pointeur non valide");
+        return;
+    }
+
+    for(int i = 0; i < src->taille; i++)
+        for(LivreH *livres = dest->tab[i]; livres; livres = livres->suivant) {
+            if(existe(dest, livres->num, livres->titre, livres->auteur) == 0)
+                inserer(dest, livres->num, livres->titre, livres->auteur);
+        }
+
+    liberer_biblio(src);
+}
+
+LivreH *rechercher_exemplaires(BiblioH *biblio) {
+
+    if(!biblio || !biblio->tab) {
+        print_probleme("Pointeur non valide");
+        return NULL;
+    }
+
+    LivreH *liste = NULL;
+
+    for(int i = 0; i < biblio->taille; i++) {
+
+        for(LivreH *livre = biblio->tab[ i ]; livre; livre = livre->suivant) {
+            for(LivreH *suivant = biblio->tab[ i ]; suivant; suivant = suivant->suivant) {
+                
+                if(suivant == livre)
+                    continue;
+
+                if(strcmp(livre->titre, suivant->titre) == 0) {
+                    
+                    LivreH *new = creer_livre(livre->num, livre->titre, livre->auteur);
+                    if(!new)
+                        continue;
+                    
+                    new->suivant = liste;
+                    liste = new;
+                }
+            }
+        }
+    }
+
+    return liste;
+}
+
+int existe(BiblioH *biblio, int numero, char *titre, char *auteur) {
+
+    if(!biblio || !biblio->tab)
+        return 0;
+
+    int indice = fonction_hachage(fonction_clef(auteur), biblio->taille);
+    for(LivreH *livres = biblio->tab[indice]; livres; livres = livres->suivant)
+        if(compare_livres(livres, numero, titre))
+            return 1;
+
+    return 0;
 }

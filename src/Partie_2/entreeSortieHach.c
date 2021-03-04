@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "commun.h"
+#include "../commun.h"
 #include "entreeSortieHach.h"
 
 BiblioH *charger_n_entrees(char *nomfic, int nombre_lignes) {
@@ -12,11 +12,11 @@ BiblioH *charger_n_entrees(char *nomfic, int nombre_lignes) {
         return NULL;
     }
 
-    // Biblio *biblio = creer_biblio();
-    // if(!biblio) {
-    //     fclose(file);
-    //     return NULL;
-    // }
+    BiblioH *biblio = creer_biblio(nombre_lignes);
+    if(!biblio) {
+        fclose(file);
+        return NULL;
+    }
 
     char BUFFER[512];
     int numero;
@@ -28,15 +28,15 @@ BiblioH *charger_n_entrees(char *nomfic, int nombre_lignes) {
         if(sscanf(BUFFER, "%d %s %s\n", &numero, titre, auteur) != 3) {
             print_probleme("Erreur de lecture depuis le fichiers");
             fclose(file);
-            // liberer_biblio(biblio);
+            liberer_biblio(biblio);
             return NULL;
         }
 
-        // inserer_en_tete(biblio, numero, titre, auteur);
+        inserer(biblio, numero, titre, auteur);
     }
 
     fclose(file);
-    // return biblio;
+    return biblio;
 }
 
 void enregister_biblio(BiblioH *biblio, char *nomfic) {
@@ -52,8 +52,9 @@ void enregister_biblio(BiblioH *biblio, char *nomfic) {
         return;
     }
 
-    // for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
-    //     fprintf(file, "%d %s %s\n", livre->num, livre->titre, livre->auteur);
+    for(int i = 0; i < biblio->taille; i++)
+        for(LivreH *livres = biblio->tab[ i ]; livres; livres = livres->suivant)
+            fprintf(file, "%d %s %s\n", livres->num, livres->titre, livres->auteur);
     
     fclose(file);
 }

@@ -174,26 +174,26 @@ int suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur) 
     return 0;
 }
 
-void fusion_biblios(Biblio *src, Biblio *dest) {
+void fusion_biblios(Biblio *dest, Biblio *src) {
     
-    if(!src || !dest) {
+    if(!dest || !src) {
         print_probleme("Pointeur non valide");
         return;
     }
 
     int add;
-    for(Livre *livre = dest->livres; livre; livre = livre->suiv) {
+    for(Livre *livre = src->livres; livre; livre = livre->suiv) {
         add = 1;
-        for(Livre *tete = src->livres; tete; tete = tete->suiv) {
+        for(Livre *tete = dest->livres; tete; tete = tete->suiv) {
             if(compare_livres(livre, tete->num, tete->titre, tete->auteur)) {
                 add = 0;
                 break;
             }
         }
         if(add)
-            inserer_en_tete(src, livre->num, livre->titre, livre->auteur);
+            inserer_en_tete(dest, livre->num, livre->titre, livre->auteur);
     }
-    liberer_biblio(dest);
+    liberer_biblio(src);
 }
 
 Biblio *rechercher_exemplaires(Biblio *biblio) {
