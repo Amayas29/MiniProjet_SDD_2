@@ -3,7 +3,7 @@
 **Membre du binome**
 
 - Amayas Sadi 28717408
-- Hamid  28717594
+- Hamid Kolli 28717594
 
 ---
 
