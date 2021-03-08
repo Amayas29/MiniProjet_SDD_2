@@ -58,3 +58,22 @@ void enregister_biblio(BiblioH *biblio, char *nomfic) {
     
     fclose(file);
 }
+
+void enregister_livres(LivreH *livres, char *nomfic) {
+    
+    if(!livres) {
+        print_probleme("Pointeur non valide");
+        return;
+    }
+
+    FILE *file = fopen(nomfic, "w");
+    if(!file) {
+        print_probleme("Erreur d'ouverture du fichier");
+        return;
+    }
+
+    for(; livres; livres = livres->suivant)
+        fprintf(file, "%d %s %s\n", livres->num, livres->titre, livres->auteur);
+    
+    fclose(file);
+}

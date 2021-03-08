@@ -209,8 +209,10 @@ Biblio *rechercher_exemplaires(Biblio *biblio) {
             if(suivant == livre)
                 continue;
             
-            if(strcmp(livre->titre, suivant->titre) == 0 && strcmp(livre->auteur, suivant->auteur) == 0)
-                inserer_en_tete(new_biblio, suivant->num, suivant->titre, suivant->auteur);
+            if(strcmp(livre->titre, suivant->titre) == 0 && strcmp(livre->auteur, suivant->auteur) == 0) {
+                inserer_en_tete(new_biblio, livre->num, livre->titre, livre->auteur);
+                break;
+            }
         }
     }
 

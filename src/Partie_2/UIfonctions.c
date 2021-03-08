@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 #include "../commun.h"
-#include "entreeSortieLC.h"
+#include "entreeSortieHach.h"
 #include "UIfonctions.h"
 
-static void rechercher_livre_numero(Biblio *biblio);
-static void rechercher_livre_titre(Biblio *biblio);
-static void recherche_livres_auteur(Biblio *biblio);
-static void recherche_ouvrages_exemplaire(Biblio *biblio);
+static void rechercher_livre_numero(BiblioH *biblio);
+static void rechercher_livre_titre(BiblioH *biblio);
+static void recherche_livres_auteur(BiblioH *biblio);
+static void recherche_ouvrages_exemplaire(BiblioH *biblio);
 
 void menu() {
     printf("\t:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"\
@@ -77,7 +77,7 @@ int saisir_int(char *message) {
     return saisie;
 }
 
-void rechercher(Biblio *biblio) {
+void rechercher(BiblioH *biblio) {
     if(!biblio) {
         print_probleme("Pointeur non valide");
         return;
@@ -98,11 +98,11 @@ void rechercher(Biblio *biblio) {
     }
 }
 
-static void rechercher_livre_numero(Biblio *biblio) {
+static void rechercher_livre_numero(BiblioH *biblio) {
     int numero = saisir_int("\n\t - Entrer le numero de l'ouverage : ");
     printf("\n");
 
-    Livre *livre = rechercher_biblio_numero(biblio, numero);
+    LivreH *livre = rechercher_biblio_numero(biblio, numero);
     if(!livre) {
         printf("\t >> Livre inexistant\n\n");
         return;
@@ -112,7 +112,7 @@ static void rechercher_livre_numero(Biblio *biblio) {
     printf("\n");
 }
 
-static void rechercher_livre_titre(Biblio *biblio) {
+static void rechercher_livre_titre(BiblioH *biblio) {
     printf("\n\t - Veuillez saisir le titre du livre : ");
     char nom[BUFSIZ];
     fgets(nom, BUFSIZ, stdin);
@@ -120,7 +120,7 @@ static void rechercher_livre_titre(Biblio *biblio) {
         
     nom[strlen(nom)-1] = '\0';
 
-    Livre *livre = rechercher_biblio_titre(biblio, nom);
+    LivreH *livre = rechercher_biblio_titre(biblio, nom);
     if(!livre) {
         printf("\t >> Livre inexistant\n\n");
         return;
@@ -130,7 +130,7 @@ static void rechercher_livre_titre(Biblio *biblio) {
     printf("\n");
 }
 
-static void recherche_livres_auteur(Biblio *biblio) {
+static void recherche_livres_auteur(BiblioH *biblio) {
     printf("\n\t - Veuillez saisir l'auteur des livres : ");
 
     char auteur[BUFSIZ];
@@ -140,25 +140,24 @@ static void recherche_livres_auteur(Biblio *biblio) {
         
     auteur[strlen(auteur)-1] = '\0';
 
-    Biblio *bib = rechercher_biblio_auteur(biblio, auteur);
-    if(!bib || !bib->livres) {
+    LivreH *livres = rechercher_biblio_auteur(biblio, auteur);
+    if(!livres) {
         printf("\t >> Aucun livres trouves\n\n");
-        liberer_biblio(bib);
         return;
     }
     
     printf("\t >> Les livres de l'auteurs : \n\n");
-    afficher_biblio(bib);
+    afficher_livres(livres);
+    liberer_livres(livres);
     printf("\n");
-    liberer_biblio(bib);
 }
 
-static void recherche_ouvrages_exemplaire(Biblio *biblio) {
-    Biblio *new = rechercher_exemplaires(biblio);
+static void recherche_ouvrages_exemplaire(BiblioH *biblio) {
 
-    if(!new || !new->livres) {
+    LivreH *new = rechercher_exemplaires(biblio);
+
+    if(!new) {
         printf("\t >> Aucun livres trouves\n\n");
-        liberer_biblio(new);
         return;
     }
 
@@ -167,7 +166,7 @@ static void recherche_ouvrages_exemplaire(Biblio *biblio) {
 
     switch (choix) {
         case 1: {
-            afficher_biblio(new);
+            afficher_livres(new);
             printf("\n");
             break;
         }
@@ -180,13 +179,13 @@ static void recherche_ouvrages_exemplaire(Biblio *biblio) {
                 
             nom_fic[strlen(nom_fic)-1] = '\0';
 
-            enregister_biblio(new, nom_fic);
+            enregister_livres(new, nom_fic);
             break;
         }
 
         case 3: {
 
-            afficher_biblio(new);
+            afficher_livres(new);
             printf("\n");
 
             printf("\n\t - Veuillez saisir le nom du fichier : ");
@@ -196,15 +195,15 @@ static void recherche_ouvrages_exemplaire(Biblio *biblio) {
                 
             nom_fic[strlen(nom_fic)-1] = '\0';
 
-            enregister_biblio(new, nom_fic);
+            enregister_livres(new, nom_fic);
             break;
         }
     }
 
-    liberer_biblio(new);
+    liberer_livres(new);
 }
 
-void supprimer(Biblio *biblio) {
+void supprimer(BiblioH *biblio) {
 
     if(!biblio) {
         print_probleme("Pointeur non valide");
@@ -233,7 +232,7 @@ void supprimer(Biblio *biblio) {
     printf("\n\t >> La suppresion c'est mal passee\n\n");
 }
 
-void ajouter(Biblio *biblio) {
+void ajouter(BiblioH *biblio) {
 
     if(!biblio) {
         print_probleme("Pointeur non valide");
@@ -255,7 +254,7 @@ void ajouter(Biblio *biblio) {
     auteur[strlen(auteur)-1] = '\0';
 
     if(!existe(biblio, numero, titre, auteur)) {
-        inserer_en_tete(biblio, numero, titre, auteur);
+        inserer(biblio, numero, titre, auteur);
         printf("\n");
         return;
     }
@@ -263,7 +262,7 @@ void ajouter(Biblio *biblio) {
     printf("\n\t - Livre deja existant\n");
 }
 
-void fusionner(Biblio *biblio) {
+void fusionner(BiblioH *biblio) {
 
     printf("\n\t - Veuillez saisir le nom du fichier : ");
     char nom_fic[BUFSIZ];
@@ -274,7 +273,7 @@ void fusionner(Biblio *biblio) {
 
     int lignes = saisir_int("\n\t - Veuillez saisir le nombre de lignes : ");
 
-    Biblio *new = charger_n_entrees(nom_fic, lignes);
+    BiblioH *new = charger_n_entrees(nom_fic, lignes);
 
     if(!new)
         return;
@@ -284,9 +283,9 @@ void fusionner(Biblio *biblio) {
     printf("\n\t >> Fusion effectuée\n\n");
 }
 
-void enregistrer(Biblio *biblio) {
+void enregistrer(BiblioH *biblio) {
 
-    if(!biblio)
+    if(!biblio || !biblio->tab)
         return;
 
     printf("\n\t - Veuillez saisir le nom du fichier : ");

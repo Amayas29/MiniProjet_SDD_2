@@ -45,6 +45,26 @@ LivreH* creer_livre(int num, char *titre, char *auteur) {
     return livre;
 }
 
+void afficher_livre(LivreH *livre) {
+
+    if(!livre) {
+        print_probleme("Pointeur non valide");
+        return;
+    }
+    
+    printf("\t >> %d %s %s\n", livre->num, livre->titre, livre->auteur);
+}
+
+void afficher_livres(LivreH *livres) {
+
+    if(!livres)
+        return;
+    
+    for(; livres; livres = livres->suivant)
+        afficher_livre(livres);
+
+}
+
 void liberer_livre(LivreH *livre) {
 
     if(!livre)
@@ -75,24 +95,40 @@ BiblioH *creer_biblio(int taille) {
         return NULL;
     }
 
+    for(int i = 0; i < taille; i++)
+        biblio->tab[ i ] = NULL;
+
     return biblio;
 }
 
+void afficher_biblio(BiblioH *biblio) {
+    
+    if(!biblio || !biblio->tab) {
+        print_probleme("Pointeur non valide");
+        return;
+    }
+
+    for(int i = 0; i < biblio->taille; i++)
+        afficher_livres(biblio->tab[ i ]);
+
+}
+void liberer_livres(LivreH *livres) {
+
+    LivreH *tmp = NULL;
+
+    while(livres) {
+        tmp = livres->suivant;
+        liberer_livre(livres);
+        livres = tmp;
+    }
+}
 void liberer_biblio(BiblioH *biblio) {
 
-    if(!biblio)
+    if(!biblio || !biblio->tab)
         return;
 
-    for(int i = 0; i < biblio->taille; i++) {
-
-        LivreH *tmp = NULL;
-
-        while(!biblio->tab[ i ]) {
-            tmp = biblio->tab[ i ]->suivant;
-            liberer_livre(biblio->tab[ i ]);
-            biblio->tab[ i ] = tmp;
-        }
-    }
+    for(int i = 0; i < biblio->taille; i++)
+        liberer_livres(biblio->tab[ i ]);
 
     free(biblio->tab);
     free(biblio);
@@ -155,10 +191,23 @@ LivreH *rechercher_biblio_auteur(BiblioH *biblio, char *auteur) {
 
     int indice = fonction_hachage(fonction_clef(auteur), biblio->taille);
 
-    return biblio->tab[indice];
+    LivreH *livres = biblio->tab[indice];
+    LivreH *liste = NULL;
+
+    LivreH *tmp = NULL;
+    for(; livres; livres = livres->suivant) {
+        if(strcmp(livres->auteur, auteur) != 0)
+            continue;
+
+        tmp = creer_livre(livres->num, livres->titre, livres->auteur);
+        tmp->suivant = liste;
+        liste = tmp;
+    }
+
+    return liste;
 }
 static int compare_livres(LivreH *livre, int numero, char *titre) {
-    return livre && livre->num == numero && strcmp(livre->titre, titre);
+    return livre && livre->num == numero && strcmp(livre->titre, titre) == 0;
 }
 
 int suppression_ouverage(BiblioH *biblio, int numero, char *titre, char *auteur) {
@@ -202,10 +251,9 @@ void fusion_biblios(BiblioH *dest, BiblioH *src) {
     }
 
     for(int i = 0; i < src->taille; i++)
-        for(LivreH *livres = dest->tab[i]; livres; livres = livres->suivant) {
+        for(LivreH *livres = src->tab[i]; livres; livres = livres->suivant)
             if(existe(dest, livres->num, livres->titre, livres->auteur) == 0)
                 inserer(dest, livres->num, livres->titre, livres->auteur);
-        }
 
     liberer_biblio(src);
 }
@@ -227,7 +275,7 @@ LivreH *rechercher_exemplaires(BiblioH *biblio) {
                 if(suivant == livre)
                     continue;
 
-                if(strcmp(livre->titre, suivant->titre) == 0) {
+                if(strcmp(livre->titre, suivant->titre) == 0 && strcmp(livre->auteur, suivant->auteur) == 0 ) {
                     
                     LivreH *new = creer_livre(livre->num, livre->titre, livre->auteur);
                     if(!new)
@@ -235,6 +283,8 @@ LivreH *rechercher_exemplaires(BiblioH *biblio) {
                     
                     new->suivant = liste;
                     liste = new;
+
+                    break;
                 }
             }
         }

@@ -12,5 +12,6 @@ void rechercher(Biblio *biblio);
 void supprimer(Biblio *biblio);
 void ajouter(Biblio *biblio);
 void fusionner(Biblio *biblio);
+void enregistrer(Biblio *biblio);
 
 #endif

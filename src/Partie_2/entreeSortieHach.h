@@ -5,5 +5,6 @@
 
 BiblioH *charger_n_entrees(char *nomfic, int nombre_lignes);
 void enregister_biblio(BiblioH *biblio, char *nomfic);
+void enregister_livres(LivreH *livres, char *nomfic);
 
 #endif

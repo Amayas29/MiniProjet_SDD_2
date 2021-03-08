@@ -19,11 +19,13 @@ int fonction_clef(char *auteur);
 int fonction_hachage(int cle, int taille);
 
 LivreH* creer_livre(int num, char *titre, char *auteur);
+void afficher_livre(LivreH *livre);
+void afficher_livres(LivreH *livres);
 void liberer_livre(LivreH *livre);
 BiblioH *creer_biblio(int taille);
 void liberer_biblio(BiblioH *biblio);
 void inserer(BiblioH *biblio, int num, char *titre, char *auteur);
-
+void liberer_livres(LivreH *livres);
 void afficher_biblio(BiblioH *biblio);
 
 LivreH *rechercher_biblio_numero(BiblioH *biblio, int numero);
