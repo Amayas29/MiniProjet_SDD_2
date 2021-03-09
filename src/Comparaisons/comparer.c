@@ -15,7 +15,7 @@ int main(void) {
         return 1;
     }
 
-    BiblioH *biblio_h = charger_n_entrees_h("../../ressources/GdeBiblio.txt", 1000);
+    BiblioH *biblio_h = charger_n_entrees_h("../../ressources/GdeBiblio.txt", 1000,1000);
     if(!biblio_h) {
         print_probleme("Erreur de chargement");
         liberer_biblio_lc(biblio_lc);

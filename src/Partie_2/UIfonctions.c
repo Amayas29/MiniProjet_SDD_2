@@ -273,7 +273,7 @@ void fusionner(BiblioH *biblio) {
 
     int lignes = saisir_int("\n\t - Veuillez saisir le nombre de lignes : ");
 
-    BiblioH *new = charger_n_entrees_h(nom_fic, lignes);
+    BiblioH *new = charger_n_entrees_h(nom_fic, lignes,lignes);
 
     if(!new)
         return;

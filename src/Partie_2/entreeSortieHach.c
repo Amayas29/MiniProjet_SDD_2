@@ -4,7 +4,7 @@
 #include "../commun.h"
 #include "entreeSortieHach.h"
 
-BiblioH *charger_n_entrees_h(char *nomfic, int nombre_lignes) {
+BiblioH *charger_n_entrees_h(char *nomfic, int nombre_lignes,int taille) {
 
     FILE *file = fopen(nomfic, "r");
     if(!file) {
@@ -12,7 +12,7 @@ BiblioH *charger_n_entrees_h(char *nomfic, int nombre_lignes) {
         return NULL;
     }
 
-    BiblioH *biblio = creer_biblio_h(nombre_lignes);
+    BiblioH *biblio = creer_biblio_h(taille);
     if(!biblio) {
         fclose(file);
         return NULL;

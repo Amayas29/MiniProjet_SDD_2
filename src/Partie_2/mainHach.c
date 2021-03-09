@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     argv ++;
 
     int lignes = atoi(argv[1]);
-    BiblioH *biblio = charger_n_entrees_h(argv[0], lignes);
+    BiblioH *biblio = charger_n_entrees_h(argv[0], lignes,lignes);
 
     if(!biblio) {
         print_probleme("Pointeur non valide");
