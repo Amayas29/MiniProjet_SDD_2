@@ -1,6 +1,6 @@
 CFLAGS = -Wall -g
 CC = gcc
-PROGS = mainListe
+PROGS = mainListe compare_recherche_lc
 
 all : $(PROGS)
 
@@ -20,6 +20,13 @@ entreeSortieLC.o : entreeSortieLC.c entreeSortieLC.h ../commun.h
 
 UIfonctions.o : UIfonctions.c UIfonctions.h entreeSortieLC.h biblioLC.h ../commun.h
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+
+compare_recherche_lc : compare_recherche_lc.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+compare_recherche_lc.o : compare_recherche_lc.c ../commun.h  biblioLC.h entreeSortieLC.h 
+	$(CC) $(CFLAGS) -o $@ $<
 
 # --------------------------------------------
 
