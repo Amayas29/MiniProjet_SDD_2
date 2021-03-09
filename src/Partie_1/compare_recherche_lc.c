@@ -9,7 +9,11 @@
 
 int main(void) {
 
-    Biblio *biblio_lc = charger_n_entrees("ressources/GdeBiblio.txt", 1000);
+    Biblio *biblio_lc = charger_n_entrees("../../ressources/GdeBiblio.txt", 1000);
+    if(!biblio_lc) {
+        print_probleme("Erreur de chargement");
+        return 1;
+    }
 
     clock_t temps_initial;
     clock_t temps_final;

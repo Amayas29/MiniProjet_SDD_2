@@ -25,7 +25,7 @@ mainHach.o : mainHach.c entreeSortieHach.h ../commun.h
 
 
 compare_recherche_h.o : compare_recherche_h.c  biblioH.h  entreeSortieHach.h ../commun.h
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 # --------------------------------------------
 

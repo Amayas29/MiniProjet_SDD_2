@@ -3,10 +3,15 @@
 #include <stdlib.h>
 #include "biblioH.h"
 #include "entreeSortieHach.h"
+#include "../commun.h"
 
 int main(void) {
 
-    BiblioH *biblio_h = charger_n_entrees("ressources/GdeBiblio.txt", 1000);
+    BiblioH *biblio_h = charger_n_entrees("../../ressources/GdeBiblio.txt", 1000);
+    if(!biblio_h) {
+        print_probleme("Erreur de chargement");
+        return 1;
+    }
 
     clock_t temps_initial;
     clock_t temps_final;
@@ -45,7 +50,7 @@ int main(void) {
         rechercher_biblio_titre(biblio_h,titres[i]);
         temps_final = clock();
         temps_cpu_h = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
-        printf(" >> Recherche par le titre %f\n",temps_cpu_h);
+        printf(" >> Recherche par le titre : %f\n",temps_cpu_h);
     }
 
     // ------------------------------------------------------------------------------
