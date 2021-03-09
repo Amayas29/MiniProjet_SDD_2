@@ -7,15 +7,19 @@
 
 int main(int argc, char **argv) {
 
+    //on teste si le nombre d'argument donnée en parametre est bien 3
     if(argc != 3) {
         fprintf(stderr, "Manque d'arguments. \nUsage %s <nom fichier> <nombre lignes>\n", argv[0]);
         return 1;
     }
 
+    //on ignore le nom du l'executable du tableau 
     argc --;
     argv ++;
 
+    //on cast la chaine de caractere en entier
     int lignes = atoi(argv[1]);
+    //on alloue la bibioteque 
     Biblio *biblio = charger_n_entrees_lc(argv[0], lignes);
 
     if(!biblio) {
@@ -43,7 +47,6 @@ int main(int argc, char **argv) {
                 printf("\n");
                 break;
             }
-
             case 2: rechercher(biblio); break;
 
             case 3: supprimer(biblio); break;
@@ -56,6 +59,7 @@ int main(int argc, char **argv) {
         }
     }
 
+    //on libere la biblioteque
     liberer_biblio_lc(biblio);
     printf("\n\t ** Merci au revoir\n");
     return 0;
