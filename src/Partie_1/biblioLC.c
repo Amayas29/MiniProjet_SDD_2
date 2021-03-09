@@ -48,7 +48,7 @@ void afficher_livre_lc(Livre *livre) {
 
 Biblio *creer_biblio_lc() {
     
-    //on allou la structure Biblio
+    //on alloue la structure Biblio
     Biblio *biblio = (Biblio *) malloc(sizeof(Biblio));
 
     if(!biblio) {
@@ -67,7 +67,7 @@ void liberer_biblio_lc(Biblio *biblio) {
         return;
 
     Livre *tmp = NULL; 
-    //on libere la memoire e tout les element de la liste 
+    //on libere la memoire de tous les elements de la liste 
     while(biblio->livres) {
         tmp = biblio->livres->suiv;
         liberer_livre_lc(biblio->livres);
@@ -101,7 +101,7 @@ void afficher_biblio_lc(Biblio *biblio) {
         return;
     }
 
-    //on parcoure tout les livres et on les affiche 
+    //on parcours tous les livres et on les affiche 
     for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
         afficher_livre_lc(livre);
 }
@@ -114,7 +114,7 @@ Livre *rechercher_biblio_numero_lc(Biblio *biblio, int numero) {
     }
 
     /*
-    on recherche le livre, on parcoure la liste tant qu'on a pas trouver le bon element 
+    on recherche le livre, on parcours la liste tant qu'on a pas trouver le bon element 
     on arrete des qu'on trouve l'element recherché qui est le livre en fonction de son numero ou la fin de la liste  
     */
     Livre *livre = biblio->livres;
@@ -131,7 +131,7 @@ Livre *rechercher_biblio_titre_lc(Biblio *biblio, char *titre) {
         return NULL;
     }
 
-    //on parcoure tant qu'on trouve pas l'element, et on returne le livre si il existe sinon null
+    //on parcours tant qu'on trouve pas l'element, et on returne le livre si il existe sinon null
     Livre *livre = biblio->livres;
     for(; livre && strcmp(livre->titre, titre) != 0; livre = livre->suiv);
 
@@ -179,7 +179,7 @@ int suppression_ouverage_lc(Biblio *biblio, int numero, char *titre, char *auteu
     }
 
     /*
-    on parcoure la liste (on utilise le suivant d'un element pour avoir le precedent qui est l'element lui meme)
+    on parcours la liste (on utilise le suivant d'un element pour avoir le precedent qui est l'element lui meme)
     on sort de la boucle si l'element n'est pas trouver ou on est au dernier element de la liste
     */
     for(; curr && !compare_livres_lc(curr->suiv, numero, titre, auteur); curr = curr->suiv);
@@ -208,7 +208,7 @@ void fusion_biblios_lc(Biblio *dest, Biblio *src) {
     }
 
     int add;
-    //on parcoure les deux bibliotheque on ajoute les element  de la deuxieme a la premiere si il n'existent pas 
+    //on parcours les deux bibliotheque on ajoute les elements  de la deuxieme a la premiere si il n'existent pas 
     for(Livre *livre = src->livres; livre; livre = livre->suiv) {
         add = 1;
         for(Livre *tete = dest->livres; tete; tete = tete->suiv) {
@@ -230,7 +230,7 @@ Biblio *rechercher_exemplaires_lc(Biblio *biblio) {
 
     if(!new_biblio)
         return NULL;
-    //on parcoure tout la liste deux fois et on teste si l'element a un exemplaire on l'ajoute a la liste
+    //on parcours toute la liste deux fois et on teste si l'element a un exemplaire on l'ajoute a la liste
     for(Livre *livre = biblio->livres; livre; livre = livre->suiv) {
         for(Livre *suivant = biblio->livres; suivant; suivant = suivant->suiv) {
             

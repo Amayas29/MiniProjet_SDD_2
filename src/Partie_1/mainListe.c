@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
 
     //on cast la chaine de caractere en entier
     int lignes = atoi(argv[1]);
+    
     //on alloue la bibioteque 
     Biblio *biblio = charger_n_entrees_lc(argv[0], lignes);
 
