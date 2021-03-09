@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include "./Partie_2/biblioH.h"
-#include "./Partie_2/entreeSortieHach.h"
-#include "commun.h"
+#include "../Partie_2/biblioH.h"
+#include "../Partie_2/entreeSortieHach.h"
+#include "../commun.h"
 
 int main(void) {
 
-    BiblioH *biblio_h = charger_n_entrees("ressources/GdeBiblio.txt", 1000);
+    BiblioH *biblio_h = charger_n_entrees("/home/hamid/etude/S2/structure_donnee/MiniProjet_SDD_2/ressources/GdeBiblio.txt", 1000);
     if(!biblio_h) {
         print_probleme("Erreur de chargement");
         return 1;
