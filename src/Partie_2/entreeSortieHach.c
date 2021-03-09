@@ -4,7 +4,7 @@
 #include "../commun.h"
 #include "entreeSortieHach.h"
 
-BiblioH *charger_n_entrees(char *nomfic, int nombre_lignes) {
+BiblioH *charger_n_entrees_h(char *nomfic, int nombre_lignes) {
 
     FILE *file = fopen(nomfic, "r");
     if(!file) {
@@ -12,7 +12,7 @@ BiblioH *charger_n_entrees(char *nomfic, int nombre_lignes) {
         return NULL;
     }
 
-    BiblioH *biblio = creer_biblio(nombre_lignes);
+    BiblioH *biblio = creer_biblio_h(nombre_lignes);
     if(!biblio) {
         fclose(file);
         return NULL;
@@ -28,18 +28,18 @@ BiblioH *charger_n_entrees(char *nomfic, int nombre_lignes) {
         if(sscanf(BUFFER, "%d %s %s\n", &numero, titre, auteur) != 3) {
             print_probleme("Erreur de lecture depuis le fichiers");
             fclose(file);
-            liberer_biblio(biblio);
+            liberer_biblio_h(biblio);
             return NULL;
         }
 
-        inserer(biblio, numero, titre, auteur);
+        inserer_h(biblio, numero, titre, auteur);
     }
 
     fclose(file);
     return biblio;
 }
 
-void enregister_biblio(BiblioH *biblio, char *nomfic) {
+void enregister_biblio_h(BiblioH *biblio, char *nomfic) {
 
     if(!biblio) {
         print_probleme("Pointeur non valide");
@@ -59,7 +59,7 @@ void enregister_biblio(BiblioH *biblio, char *nomfic) {
     fclose(file);
 }
 
-void enregister_livres(LivreH *livres, char *nomfic) {
+void enregister_livres_h(LivreH *livres, char *nomfic) {
     
     if(!livres) {
         print_probleme("Pointeur non valide");

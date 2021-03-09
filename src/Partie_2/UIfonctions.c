@@ -102,13 +102,13 @@ static void rechercher_livre_numero(BiblioH *biblio) {
     int numero = saisir_int("\n\t - Entrer le numero de l'ouverage : ");
     printf("\n");
 
-    LivreH *livre = rechercher_biblio_numero(biblio, numero);
+    LivreH *livre = rechercher_biblio_numero_h(biblio, numero);
     if(!livre) {
         printf("\t >> Livre inexistant\n\n");
         return;
     }
                             
-    afficher_livre(livre);
+    afficher_livre_h(livre);
     printf("\n");
 }
 
@@ -120,13 +120,13 @@ static void rechercher_livre_titre(BiblioH *biblio) {
         
     nom[strlen(nom)-1] = '\0';
 
-    LivreH *livre = rechercher_biblio_titre(biblio, nom);
+    LivreH *livre = rechercher_biblio_titre_h(biblio, nom);
     if(!livre) {
         printf("\t >> Livre inexistant\n\n");
         return;
     }
 
-    afficher_livre(livre);
+    afficher_livre_h(livre);
     printf("\n");
 }
 
@@ -140,21 +140,21 @@ static void recherche_livres_auteur(BiblioH *biblio) {
         
     auteur[strlen(auteur)-1] = '\0';
 
-    LivreH *livres = rechercher_biblio_auteur(biblio, auteur);
+    LivreH *livres = rechercher_biblio_auteur_h(biblio, auteur);
     if(!livres) {
         printf("\t >> Aucun livres trouves\n\n");
         return;
     }
     
     printf("\t >> Les livres de l'auteurs : \n\n");
-    afficher_livres(livres);
-    liberer_livres(livres);
+    afficher_livres_h(livres);
+    liberer_livres_h(livres);
     printf("\n");
 }
 
 static void recherche_ouvrages_exemplaire(BiblioH *biblio) {
 
-    LivreH *new = rechercher_exemplaires(biblio);
+    LivreH *new = rechercher_exemplaires_h(biblio);
 
     if(!new) {
         printf("\t >> Aucun livres trouves\n\n");
@@ -166,7 +166,7 @@ static void recherche_ouvrages_exemplaire(BiblioH *biblio) {
 
     switch (choix) {
         case 1: {
-            afficher_livres(new);
+            afficher_livres_h(new);
             printf("\n");
             break;
         }
@@ -179,13 +179,13 @@ static void recherche_ouvrages_exemplaire(BiblioH *biblio) {
                 
             nom_fic[strlen(nom_fic)-1] = '\0';
 
-            enregister_livres(new, nom_fic);
+            enregister_livres_h(new, nom_fic);
             break;
         }
 
         case 3: {
 
-            afficher_livres(new);
+            afficher_livres_h(new);
             printf("\n");
 
             printf("\n\t - Veuillez saisir le nom du fichier : ");
@@ -195,12 +195,12 @@ static void recherche_ouvrages_exemplaire(BiblioH *biblio) {
                 
             nom_fic[strlen(nom_fic)-1] = '\0';
 
-            enregister_livres(new, nom_fic);
+            enregister_livres_h(new, nom_fic);
             break;
         }
     }
 
-    liberer_livres(new);
+    liberer_livres_h(new);
 }
 
 void supprimer(BiblioH *biblio) {
@@ -214,17 +214,17 @@ void supprimer(BiblioH *biblio) {
     char titre[BUFSIZ];
     char auteur[BUFSIZ];
     
-    numero = saisir_int("\n\t - Veuillez inserer le numero du livre : ");
+    numero = saisir_int("\n\t - Veuillez inserer_h le numero du livre : ");
    
-    printf("\n\t - Veuillez inserer le titre du livre : ");
+    printf("\n\t - Veuillez inserer_h le titre du livre : ");
     fgets(titre, BUFSIZ, stdin);
     titre[strlen(titre)-1] = '\0';
    
-    printf("\n\t - Veuillez inserer l'auteur du livre : ");
+    printf("\n\t - Veuillez inserer_h l'auteur du livre : ");
     fgets(auteur, BUFSIZ, stdin);
     auteur[strlen(auteur)-1] = '\0';
 
-    if(suppression_ouverage(biblio, numero, titre, auteur)) {
+    if(suppression_ouverage_h(biblio, numero, titre, auteur)) {
         printf("\n\t >> La suppresion est bien effectuee\n\n");
         return;
     }
@@ -243,18 +243,18 @@ void ajouter(BiblioH *biblio) {
     char titre[BUFSIZ];
     char auteur[BUFSIZ];
     
-    numero = saisir_int("\n\t - Veuillez inserer le numero du livre : ");
+    numero = saisir_int("\n\t - Veuillez inserer_h le numero du livre : ");
    
-    printf("\n\t - Veuillez inserer le titre du livre : ");
+    printf("\n\t - Veuillez inserer_h le titre du livre : ");
     fgets(titre, BUFSIZ, stdin);
     titre[strlen(titre)-1] = '\0';
    
-    printf("\n\t - Veuillez inserer l'auteur du livre : ");
+    printf("\n\t - Veuillez inserer_h l'auteur du livre : ");
     fgets(auteur, BUFSIZ, stdin);
     auteur[strlen(auteur)-1] = '\0';
 
-    if(!existe(biblio, numero, titre, auteur)) {
-        inserer(biblio, numero, titre, auteur);
+    if(!existe_h(biblio, numero, titre, auteur)) {
+        inserer_h(biblio, numero, titre, auteur);
         printf("\n");
         return;
     }
@@ -273,12 +273,12 @@ void fusionner(BiblioH *biblio) {
 
     int lignes = saisir_int("\n\t - Veuillez saisir le nombre de lignes : ");
 
-    BiblioH *new = charger_n_entrees(nom_fic, lignes);
+    BiblioH *new = charger_n_entrees_h(nom_fic, lignes);
 
     if(!new)
         return;
 
-    fusion_biblios(biblio, new);
+    fusion_biblios_h(biblio, new);
 
     printf("\n\t >> Fusion effectuée\n\n");
 }
@@ -295,7 +295,7 @@ void enregistrer(BiblioH *biblio) {
 
     nom_fic[strlen(nom_fic)-1] = '\0';
 
-    enregister_biblio(biblio, nom_fic);
+    enregister_biblio_h(biblio, nom_fic);
 
     printf("\n\t >> Enregistrement effectué\n\n");
 }

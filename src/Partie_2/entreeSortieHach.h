@@ -3,8 +3,8 @@
 
 #include "biblioH.h"
 
-BiblioH *charger_n_entrees(char *nomfic, int nombre_lignes);
-void enregister_biblio(BiblioH *biblio, char *nomfic);
-void enregister_livres(LivreH *livres, char *nomfic);
+BiblioH *charger_n_entrees_h(char *nomfic, int nombre_lignes);
+void enregister_biblio_h(BiblioH *biblio, char *nomfic);
+void enregister_livres_h(LivreH *livres, char *nomfic);
 
 #endif
