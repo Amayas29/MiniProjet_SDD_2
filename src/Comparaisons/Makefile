@@ -33,4 +33,4 @@ plot_auteurs:
 	gnuplot -p < commande_plot_auteurs.txt
 
 clean :
-	rm -f *.o $(PROGS) *.ps
+	rm -f *.o $(PROGS) *.ps *.log

@@ -15,14 +15,14 @@ int main(void) {
         return 1;
     }
 
-    BiblioH *biblio_h = charger_n_entrees_h("../../ressources/GdeBiblio.txt", 1000,1000);
+    BiblioH *biblio_h = charger_n_entrees_h("../../ressources/GdeBiblio.txt", 1000, 1000);
     if(!biblio_h) {
         print_probleme("Erreur de chargement");
         liberer_biblio_lc(biblio_lc);
         return 1;
     }
 
-    FILE *file_numeros = fopen("file_numeros.log","w");
+    FILE *file_numeros = fopen("file_numeros.log", "w");
     if(!file_numeros) {
         print_probleme("Erreur de chargement");
         liberer_biblio_h(biblio_h);
@@ -30,7 +30,7 @@ int main(void) {
         return 1;
     }
 
-    FILE *file_titres = fopen("file_titres.log","w");
+    FILE *file_titres = fopen("file_titres.log", "w");
     if(!file_titres) {
         print_probleme("Erreur de chargement");
         liberer_biblio_h(biblio_h);
@@ -39,7 +39,7 @@ int main(void) {
         return 1;
     }
 
-    FILE *file_auteurs = fopen("file_auteurs.log","w");
+    FILE *file_auteurs = fopen("file_auteurs.log", "w");
     if(!file_auteurs) {
         print_probleme("Erreur de chargement");
         liberer_biblio_h(biblio_h);
