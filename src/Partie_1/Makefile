@@ -21,8 +21,6 @@ entreeSortieLC.o : entreeSortieLC.c entreeSortieLC.h ../commun.h
 UIfonctions.o : UIfonctions.c UIfonctions.h entreeSortieLC.h biblioLC.h ../commun.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-
-
 # --------------------------------------------
 
 clean :
