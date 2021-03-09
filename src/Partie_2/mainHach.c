@@ -7,15 +7,20 @@
 
 int main(int argc, char **argv) {
 
+    //on teste si le nombre d'argument donnée en parametre est bien 3
     if(argc != 3) {
         fprintf(stderr, "Manque d'arguments. \nUsage %s <nom fichier> <nombre lignes>\n", argv[0]);
         return 1;
     }
 
+    //on ignore le nom du l'executable du tableau 
     argc --;
     argv ++;
 
+    //on cast la chaine de caractere en entier
     int lignes = atoi(argv[1]);
+
+    //on alloue la bibioteque 
     BiblioH *biblio = charger_n_entrees_h(argv[0], lignes,lignes);
 
     if(!biblio) {
