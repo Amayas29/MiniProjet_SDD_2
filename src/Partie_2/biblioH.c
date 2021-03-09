@@ -119,6 +119,7 @@ void afficher_biblio_h(BiblioH *biblio) {
         afficher_livres_h(biblio->tab[ i ]);
 
 }
+
 void liberer_livres_h(LivreH *livres) {
 
     LivreH *tmp = NULL;
@@ -130,6 +131,7 @@ void liberer_livres_h(LivreH *livres) {
         livres = tmp;
     }
 }
+
 void liberer_biblio_h(BiblioH *biblio) {
 
     if(!biblio || !biblio->tab)

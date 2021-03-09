@@ -26,23 +26,23 @@ int fonction_hachage(int cle, int taille);
 // Créer un livre à partir de son numéro, titre et auteur
 LivreH* creer_livre_h(int num, char *titre, char *auteur);
 
-// Affiche un livres
-void afficher_livre_h(LivreH *livre);
-
-// Affiche la liste des livres
-void afficher_livres_h(LivreH *livres);
-
 // Libere la mémoire alloué à un livre
 void liberer_livre_h(LivreH *livre);
-
-// Libere la liste des livres
-void liberer_livres_h(LivreH *livres);
 
 // Crée un bibliothéque à partir de sa taille
 BiblioH *creer_biblio_h(int taille);
 
 // Libere toute la mémoire alloué à la bibliotheque
 void liberer_biblio_h(BiblioH *biblio);
+
+// Affiche un livres
+void afficher_livre_h(LivreH *livre);
+
+// Affiche la liste des livres
+void afficher_livres_h(LivreH *livres);
+
+// Libere la liste des livres
+void liberer_livres_h(LivreH *livres);
 
 // Permet d'inserer un livre à une bibliotheque
 void inserer_h(BiblioH *biblio, int num, char *titre, char *auteur);
