@@ -1,12 +1,11 @@
 CFLAGS = -Wall -g
 CC = gcc
-PROGS = mainHach compare_recherche_h
+PROGS = mainHach 
 
 all : $(PROGS)
 
 # --------------------------------------------
-compare_recherche_h : compare_recherche_h.o biblioH.o entreeSortieHach.o
-	$(CC) $(CFLAGS) -o $@ $^
+
 
 mainHach : biblioH.o entreeSortieHach.o UIfonctions.o mainHach.o
 	$(CC) $(CFLAGS) -o $@ $^
@@ -23,9 +22,6 @@ UIfonctions.o : UIfonctions.c UIfonctions.h entreeSortieHach.h biblioH.h ../comm
 mainHach.o : mainHach.c entreeSortieHach.h ../commun.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-
-compare_recherche_h.o : compare_recherche_h.c  biblioH.h  entreeSortieHach.h ../commun.h
-	$(CC) $(CFLAGS) -o $@ -c $<
 
 # --------------------------------------------
 

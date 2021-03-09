@@ -1,22 +1,24 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include "biblioH.h"
-#include "entreeSortieHach.h"
-#include "../commun.h"
+
+#include "./Partie_1/biblioLC.h"
+#include "./Partie_1/entreeSortieLC.h"
+#include "commun.h"
+
 
 int main(void) {
 
-    BiblioH *biblio_h = charger_n_entrees("../../ressources/GdeBiblio.txt", 1000);
-    if(!biblio_h) {
+    Biblio *biblio_lc = charger_n_entrees("ressources/GdeBiblio.txt", 1000);
+    if(!biblio_lc) {
         print_probleme("Erreur de chargement");
         return 1;
     }
 
     clock_t temps_initial;
     clock_t temps_final;
-    double temps_cpu_h;
-
+    double temps_cpu_lc;
+    
     int numeros[] = {
            1,   25,  198,     23,   49,
          190,  356,  897,      2,    10,
@@ -25,13 +27,13 @@ int main(void) {
     };
 
     printf("\n\n____________________ Recherche par numéro ____________________\n\n");
-
-    for (int i = 0; i < 20; i++) {   
+    
+    for (int i = 0; i < 20; i++) {
         temps_initial = clock();
-        rechercher_biblio_numero(biblio_h,numeros[i]);
+        rechercher_biblio_numero(biblio_lc,numeros[i]);
         temps_final = clock();
-        temps_cpu_h = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
-        printf(" >> Recherche par le numéro : %f\n",temps_cpu_h);
+        temps_cpu_lc = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
+        printf(" >> Recherche par le numéro : %f\n",temps_cpu_lc);
     }
 
     // ------------------------------------------------------------------------------
@@ -47,10 +49,10 @@ int main(void) {
 
     for (int i = 0; i < 20; i++) {   
         temps_initial = clock();
-        rechercher_biblio_titre(biblio_h,titres[i]);
+        rechercher_biblio_titre(biblio_lc,titres[i]);
         temps_final = clock();
-        temps_cpu_h = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
-        printf(" >> Recherche par le titre : %f\n",temps_cpu_h);
+        temps_cpu_lc = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
+        printf(" >> Recherche par le titre : %f\n",temps_cpu_lc);
     }
 
     // ------------------------------------------------------------------------------
@@ -64,16 +66,16 @@ int main(void) {
           "mazopwabal",  "bczvhjabx",     "nbwgycaz",      "amayas",      "hamid"
     };
 
-    LivreH *livre_liste_h = NULL;
+    Biblio *biblio_search = NULL;
     for (int i = 0; i < 20; i++) {   
         temps_initial = clock();
-        livre_liste_h = rechercher_biblio_auteur(biblio_h,auteurs[i]);
+        biblio_search =  rechercher_biblio_auteur(biblio_lc,auteurs[i]);
         temps_final = clock();
-        temps_cpu_h = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
-        liberer_livres(livre_liste_h);
-        printf(" >> Recherche par l'auteur : %f\n",temps_cpu_h);
+        temps_cpu_lc = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;      
+        liberer_biblio(biblio_search);
+        printf(" >> Recherche par l'auteur : %f\n",temps_cpu_lc);
     }
 
-    liberer_biblio(biblio_h);
+    liberer_biblio(biblio_lc);
     return 0;
 }
