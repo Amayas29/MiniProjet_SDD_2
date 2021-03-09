@@ -1,6 +1,6 @@
 CFLAGS = -Wall -g
 CC = gcc
-PROGS = comparer
+PROGS = comparer compare_hach
 
 all : $(PROGS)
 
@@ -23,6 +23,12 @@ comparer : comparer.o biblioLC.o entreeSortieLC.o biblioH.o entreeSortieHach.o
 comparer.o : comparer.c ../commun.h ../Partie_1/biblioLC.h ../Partie_1/entreeSortieLC.h ../Partie_2/biblioH.h  ../Partie_2/entreeSortieHach.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
+compare_hach : compare_hach.o biblioH.o entreeSortieHach.o
+	$(CC) $(CFLAGS) -o $@  $^
+
+compare_hach.o: compare_hach.c ../commun.h ../Partie_2/biblioH.h  ../Partie_2/entreeSortieHach.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
 plot_numeros:
 	gnuplot -p < commande_plot_numeros.txt
 
@@ -31,6 +37,9 @@ plot_titres:
 
 plot_auteurs:
 	gnuplot -p < commande_plot_auteurs.txt
+
+plot_compare_hash:
+	gnuplot -p < commande_plot_compare_hach.txt
 
 clean :
 	rm -f *.o $(PROGS) *.ps *.log

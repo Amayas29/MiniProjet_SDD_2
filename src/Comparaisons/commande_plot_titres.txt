@@ -5,6 +5,6 @@ set style histogram cluster gap 1
 set style fill solid border -1
 set boxwidth 0.5
 set xtic rotate by -90 scale 0
-plot "file_titres" u 2:xtic(1) ti "Liste", '' u 3 ti "Hach"
+plot "file_titres.log" u 2:xtic(1) ti "Liste", '' u 3 ti "Hach"
 set term postscript portrait
 set output "histogramme_titres.ps"
