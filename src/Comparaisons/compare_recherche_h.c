@@ -5,26 +5,14 @@
 #include "../Partie_2/entreeSortieHach.h"
 #include "../commun.h"
 
-int main(void) {
 
-    BiblioH *biblio_h = charger_n_entrees("/home/hamid/etude/S2/structure_donnee/MiniProjet_SDD_2/ressources/GdeBiblio.txt", 1000);
-    if(!biblio_h) {
-        print_probleme("Erreur de chargement");
-        return 1;
-    }
+float *get_stats_numeros(int *numeros, int taille) {
+
+    float *tab = malloc(sizeof(float) * taille);
 
     clock_t temps_initial;
     clock_t temps_final;
     double temps_cpu_h;
-
-    int numeros[] = {
-           1,   25,  198,     23,   49,
-         190,  356,  897,      2,    10,
-        1029, 1893, 26387, 38942, 18937,
-        3648, 9894,  7848,  4765,  9384
-    };
-
-    printf("\n\n____________________ Recherche par numéro ____________________\n\n");
 
     for (int i = 0; i < 20; i++) {   
         temps_initial = clock();
@@ -33,6 +21,36 @@ int main(void) {
         temps_cpu_h = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
         printf(" >> Recherche par le numéro : %f\n",temps_cpu_h);
     }
+
+    return tab;
+}
+
+int main(void) {
+
+    BiblioH *biblio_h = charger_n_entrees("/home/hamid/etude/S2/structure_donnee/MiniProjet_SDD_2/ressources/GdeBiblio.txt", 1000);
+    if(!biblio_h) {
+        print_probleme("Erreur de chargement");
+        return 1;
+    }
+
+
+
+    int numeros[] = {
+           1,   25,  198,     23,   49,
+         190,  356,  897,      2,    10,
+        1029, 1893, 26387, 38942, 18937,
+        3648, 9894,  7848,  4765,  9384
+    };
+
+    // printf("\n\n____________________ Recherche par numéro ____________________\n\n");
+
+    // for (int i = 0; i < 20; i++) {   
+    //     temps_initial = clock();
+    //     rechercher_biblio_numero(biblio_h,numeros[i]);
+    //     temps_final = clock();
+    //     temps_cpu_h = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
+    //     printf(" >> Recherche par le numéro : %f\n",temps_cpu_h);
+    // }
 
     // ------------------------------------------------------------------------------
 

@@ -3,7 +3,7 @@
 #include "../commun.h"
 #include "biblioLC.h"
 
-Livre *creer_livre(int num, char *titre, char *auteur) {
+Livre *creer_livre_lc(int num, char *titre, char *auteur) {
 
     if(!titre || !auteur) {
         print_probleme("Pointeur non valide");
@@ -23,7 +23,7 @@ Livre *creer_livre(int num, char *titre, char *auteur) {
     return livre;
 }
 
-void liberer_livre(Livre *livre) {
+void liberer_livre_lc(Livre *livre) {
 
     if(!livre)
         return;
@@ -33,7 +33,7 @@ void liberer_livre(Livre *livre) {
     free(livre);
 }
 
-void afficher_livre(Livre *livre) {
+void afficher_livre_lc(Livre *livre) {
 
       if(!livre) {
         print_probleme("Pointeur non valide");
@@ -43,7 +43,7 @@ void afficher_livre(Livre *livre) {
     printf("\t >> %d %s %s\n", livre->num, livre->titre, livre->auteur);
 }
 
-Biblio *creer_biblio() {
+Biblio *creer_biblio_lc() {
     Biblio *biblio = (Biblio *) malloc(sizeof(Biblio));
 
     if(!biblio) {
@@ -55,7 +55,7 @@ Biblio *creer_biblio() {
     return biblio;
 }
 
-void liberer_biblio(Biblio *biblio) {
+void liberer_biblio_lc(Biblio *biblio) {
 
     if(!biblio)
         return;
@@ -64,21 +64,21 @@ void liberer_biblio(Biblio *biblio) {
 
     while(biblio->livres) {
         tmp = biblio->livres->suiv;
-        liberer_livre(biblio->livres);
+        liberer_livre_lc(biblio->livres);
         biblio->livres = tmp;
     }
     
     free(biblio);
 }
 
-void inserer_en_tete(Biblio *biblio, int num, char *titre, char *auteur) {
+void inserer_en_tete_lc(Biblio *biblio, int num, char *titre, char *auteur) {
     
     if(!biblio) {
         print_probleme("Pointeur non valide");
         return;
     }
 
-    Livre *livre = creer_livre(num, titre, auteur);
+    Livre *livre = creer_livre_lc(num, titre, auteur);
     if(!livre)
         return;
     
@@ -86,7 +86,7 @@ void inserer_en_tete(Biblio *biblio, int num, char *titre, char *auteur) {
     biblio->livres = livre;
 }
 
-void afficher_biblio(Biblio *biblio) {
+void afficher_biblio_lc(Biblio *biblio) {
     
     if(!biblio) {
         print_probleme("Pointeur non valide");
@@ -94,10 +94,10 @@ void afficher_biblio(Biblio *biblio) {
     }
 
     for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
-        afficher_livre(livre);
+        afficher_livre_lc(livre);
 }
 
-Livre *rechercher_biblio_numero(Biblio *biblio, int numero) {
+Livre *rechercher_biblio_numero_lc(Biblio *biblio, int numero) {
     
     if(!biblio) {
         print_probleme("Pointeur non valide");
@@ -110,7 +110,7 @@ Livre *rechercher_biblio_numero(Biblio *biblio, int numero) {
     return livre;
 }
 
-Livre *rechercher_biblio_titre(Biblio *biblio, char *titre) {
+Livre *rechercher_biblio_titre_lc(Biblio *biblio, char *titre) {
 
     if(!biblio) {
         print_probleme("Pointeur non valide");
@@ -123,30 +123,30 @@ Livre *rechercher_biblio_titre(Biblio *biblio, char *titre) {
     return livre;
 }
 
-Biblio *rechercher_biblio_auteur(Biblio *biblio, char *auteur) {
+Biblio *rechercher_biblio_auteur_lc(Biblio *biblio, char *auteur) {
 
     if(!biblio) {
         print_probleme("Pointeur non valide");
         return NULL;
     }
 
-    Biblio *new = creer_biblio();
+    Biblio *new = creer_biblio_lc();
     if(!new)
         return NULL;
     
     for(Livre *livre = biblio->livres; livre; livre = livre->suiv) {
         if(strcmp(livre->auteur, auteur) == 0)
-            inserer_en_tete(new, livre->num, livre->titre, livre->auteur);
+            inserer_en_tete_lc(new, livre->num, livre->titre, livre->auteur);
     }
 
     return new;
 }
 
-static int compare_livres(Livre *livre, int numero, char *titre, char *auteur) {
+static int compare_livres_lc(Livre *livre, int numero, char *titre, char *auteur) {
     return livre && livre->num == numero && strcmp(livre->titre, titre) == 0 && strcmp(livre->auteur, auteur) == 0; 
 }
 
-int suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur) {
+int suppression_ouverage_lc(Biblio *biblio, int numero, char *titre, char *auteur) {
     
     if(!biblio) {
         print_probleme("Pointeur non valide");
@@ -155,26 +155,26 @@ int suppression_ouverage(Biblio *biblio, int numero, char *titre, char *auteur) 
 
     Livre *curr = biblio->livres;
 
-    if(compare_livres(biblio->livres, numero, titre, auteur)) {
+    if(compare_livres_lc(biblio->livres, numero, titre, auteur)) {
         biblio->livres = curr->suiv;
-        liberer_livre(curr);
+        liberer_livre_lc(curr);
         return 1;
     }
 
-    for(; curr && !compare_livres(curr->suiv, numero, titre, auteur); curr = curr->suiv);
+    for(; curr && !compare_livres_lc(curr->suiv, numero, titre, auteur); curr = curr->suiv);
 
     Livre *sup = NULL;
     if(curr) {
         sup = curr->suiv;
         curr->suiv = sup->suiv;
-        liberer_livre(sup);
+        liberer_livre_lc(sup);
         return 1;
     }
 
     return 0;
 }
 
-void fusion_biblios(Biblio *dest, Biblio *src) {
+void fusion_biblios_lc(Biblio *dest, Biblio *src) {
     
     if(!dest || !src) {
         print_probleme("Pointeur non valide");
@@ -185,20 +185,20 @@ void fusion_biblios(Biblio *dest, Biblio *src) {
     for(Livre *livre = src->livres; livre; livre = livre->suiv) {
         add = 1;
         for(Livre *tete = dest->livres; tete; tete = tete->suiv) {
-            if(compare_livres(livre, tete->num, tete->titre, tete->auteur)) {
+            if(compare_livres_lc(livre, tete->num, tete->titre, tete->auteur)) {
                 add = 0;
                 break;
             }
         }
         if(add)
-            inserer_en_tete(dest, livre->num, livre->titre, livre->auteur);
+            inserer_en_tete_lc(dest, livre->num, livre->titre, livre->auteur);
     }
-    liberer_biblio(src);
+    liberer_biblio_lc(src);
 }
 
-Biblio *rechercher_exemplaires(Biblio *biblio) {
+Biblio *rechercher_exemplaires_lc(Biblio *biblio) {
 
-    Biblio *new_biblio = creer_biblio();
+    Biblio *new_biblio = creer_biblio_lc();
 
     if(!new_biblio)
         return NULL;
@@ -210,7 +210,7 @@ Biblio *rechercher_exemplaires(Biblio *biblio) {
                 continue;
             
             if(strcmp(livre->titre, suivant->titre) == 0 && strcmp(livre->auteur, suivant->auteur) == 0) {
-                inserer_en_tete(new_biblio, livre->num, livre->titre, livre->auteur);
+                inserer_en_tete_lc(new_biblio, livre->num, livre->titre, livre->auteur);
                 break;
             }
         }
@@ -219,12 +219,12 @@ Biblio *rechercher_exemplaires(Biblio *biblio) {
     return new_biblio;
 }
 
-int existe(Biblio *biblio, int numero, char *titre, char *auteur) {
+int existe_lc(Biblio *biblio, int numero, char *titre, char *auteur) {
     if(!biblio)
         return 0;
 
     for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
-        if(compare_livres(livre, numero, titre, auteur))
+        if(compare_livres_lc(livre, numero, titre, auteur))
             return 1;
     
     return 0;

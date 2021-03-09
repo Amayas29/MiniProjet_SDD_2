@@ -5,7 +5,7 @@
 #include "biblioLC.h"
 #include "entreeSortieLC.h"
 
-Biblio *charger_n_entrees(char *nomfic, int nombre_lignes) {
+Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes) {
 
     FILE *file = fopen(nomfic, "r");
     if(!file) {
@@ -13,7 +13,7 @@ Biblio *charger_n_entrees(char *nomfic, int nombre_lignes) {
         return NULL;
     }
 
-    Biblio *biblio = creer_biblio();
+    Biblio *biblio = creer_biblio_lc();
     if(!biblio) {
         fclose(file);
         return NULL;
@@ -29,18 +29,18 @@ Biblio *charger_n_entrees(char *nomfic, int nombre_lignes) {
         if(sscanf(BUFFER, "%d %s %s\n", &numero, titre, auteur) != 3) {
             print_probleme("Erreur de lecture depuis le fichiers");
             fclose(file);
-            liberer_biblio(biblio);
+            liberer_biblio_lc(biblio);
             return NULL;
         }
 
-        inserer_en_tete(biblio, numero, titre, auteur);
+        inserer_en_tete_lc(biblio, numero, titre, auteur);
     }
 
     fclose(file);
     return biblio;
 }
 
-void enregister_biblio(Biblio *biblio, char *nomfic) {
+void enregister_biblio_lc(Biblio *biblio, char *nomfic) {
 
     if(!biblio) {
         print_probleme("Pointeur non valide");
