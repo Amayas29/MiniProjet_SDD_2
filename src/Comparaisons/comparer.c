@@ -143,7 +143,7 @@ int main(void) {
 
         liberer_livres_h(livre_liste_h);
 
-        fprintf(file_titres,"%s %f %f\n", auteurs[i], temps_cpu_lc, temps_cpu_h);       
+        fprintf(file_auteurs,"%s %f %f\n", auteurs[i], temps_cpu_lc, temps_cpu_h);       
     }
     
     //on libere toutes les structure allouer
