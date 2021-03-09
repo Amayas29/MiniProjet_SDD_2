@@ -7,21 +7,20 @@
 #include "../Partie_2/entreeSortieHach.h"
 #include "../commun.h"
 
-
 int main(void) {
 
-    Biblio *biblio_lc = charger_n_entrees_lc("/home/hamid/etude/S2/structure_donnee/MiniProjet_SDD_2/ressources/GdeBiblio.txt", 1000);
+    Biblio *biblio_lc = charger_n_entrees_lc("../../ressources/GdeBiblio.txt", 1000);
     if(!biblio_lc) {
         print_probleme("Erreur de chargement");
         return 1;
     }
-    BiblioH *biblio_h = charger_n_entrees_h("/home/hamid/etude/S2/structure_donnee/MiniProjet_SDD_2/ressources/GdeBiblio.txt", 1000);
+
+    BiblioH *biblio_h = charger_n_entrees_h("../../ressources/GdeBiblio.txt", 1000);
     if(!biblio_h) {
         print_probleme("Erreur de chargement");
-        liberer_biblio(biblio_h);
+        liberer_biblio_lc(biblio_lc);
         return 1;
     }
-
 
     FILE *file_numeros = fopen("file_numeros","w");
     if(!file_numeros) {
@@ -31,8 +30,8 @@ int main(void) {
         return 1;
     }
 
-    FILE *file_livres = fopen("file_livres","w");
-    if(!file_livres) {
+    FILE *file_titres = fopen("file_titres","w");
+    if(!file_titres) {
         print_probleme("Erreur de chargement");
         liberer_biblio_h(biblio_h);
         liberer_biblio_lc(biblio_lc);
@@ -46,10 +45,9 @@ int main(void) {
         liberer_biblio_h(biblio_h);
         liberer_biblio_lc(biblio_lc);
         fclose(file_numeros);
-        fclose(file_livres);
+        fclose(file_titres);
         return 1;
     }
-
 
     clock_t temps_initial;
     clock_t temps_final;
@@ -63,24 +61,22 @@ int main(void) {
         3648, 9894,  7848,  4765,  9384
     };
 
-    printf("\n\n____________________ Recherche par numéro ____________________\n\n");
-    
     for (int i = 0; i < 20; i++) {
+
         temps_initial = clock();
-        rechercher_biblio_numero_lc(biblio_lc,numeros[i]);
+        rechercher_biblio_numero_lc(biblio_lc, numeros[i]);
         temps_final = clock();
         temps_cpu_lc = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
         
-        
         temps_initial = clock();
-        rechercher_biblio_numero_h(biblio_h,numeros[i]);
+        rechercher_biblio_numero_h(biblio_h, numeros[i]);
         temps_final = clock();
         temps_cpu_h = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
-        fprintf(file_numeros,"%d %f %f\n",numeros[i],temps_cpu_lc,temps_cpu_h);
+
+        fprintf(file_numeros,"%d %f %f\n", numeros[i], temps_cpu_lc, temps_cpu_h);
     }
 
     // ------------------------------------------------------------------------------
-
    
     char *titres[] = {
            "CPQIUDQPNYLN", "FWKHOPKMCOQHNWNKUE",       "BUDPEHDMF", "KMLNOZJKPQPXR0", "IOHORDTQKVWC", 
@@ -90,23 +86,21 @@ int main(void) {
     };
 
     for (int i = 0; i < 20; i++) {   
+
         temps_initial = clock();
-        rechercher_biblio_titre_lc(biblio_lc,titres[i]);
+        rechercher_biblio_titre_lc(biblio_lc, titres[i]);
         temps_final = clock();
         temps_cpu_lc = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
 
         temps_initial = clock();
-        rechercher_biblio_titre_h(biblio_h,titres[i]);
+        rechercher_biblio_titre_h(biblio_h, titres[i]);
         temps_final = clock();
         temps_cpu_h = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
 
-        fprintf(file_livres,"%s %f %f\n",titres[i],temps_cpu_lc,temps_cpu_lc);
-
+        fprintf(file_titres,"%s %f %f\n", titres[i], temps_cpu_lc, temps_cpu_h);
     }
 
     // ------------------------------------------------------------------------------
-
-  
     
     char *auteurs[] = {
             "zrlkosnu",    "qnrajro", "efsarcbynecd", "wxwtwheibqv",  "aijvwcyau",
@@ -117,43 +111,30 @@ int main(void) {
 
     Biblio *biblio_search = NULL;
     LivreH *livre_liste_h = NULL;
+
     for (int i = 0; i < 20; i++) {   
+
         temps_initial = clock();
-        biblio_search =  rechercher_biblio_auteur_lc(biblio_lc,auteurs[i]);
-        if(!biblio_search) {
-           print_probleme("Erreur de chargement");
-            liberer_biblio_h(biblio_h);
-            liberer_biblio_lc(biblio_lc);
-            fclose(file_numeros);
-            fclose(file_livres);
-            fclose(file_auteurs);
-            return 1;
-        }
+        biblio_search =  rechercher_biblio_auteur_lc(biblio_lc, auteurs[i]);
         temps_final = clock();
-        temps_cpu_lc = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;      
+        temps_cpu_lc = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
+
         liberer_biblio_lc(biblio_search);
+
         temps_initial = clock();
-        livre_liste_h = rechercher_biblio_auteur_h(biblio_h,auteurs[i]);
-        if(!livre_liste_h) {
-           print_probleme("Erreur de chargement");
-            liberer_biblio_h(biblio_h);
-            liberer_biblio_lc(biblio_lc);
-            liberer_biblio_lc(biblio_search);
-            fclose(file_numeros);
-            fclose(file_livres);
-            fclose(file_auteurs);
-            return 1;
-        }
+        livre_liste_h = rechercher_biblio_auteur_h(biblio_h, auteurs[i]);
         temps_final = clock();
         temps_cpu_h = ((double) (temps_final - temps_initial)) / CLOCKS_PER_SEC;
+
         liberer_livres_h(livre_liste_h);
-        fprintf(file_livres,"%s %f %f\n",auteurs[i],temps_cpu_lc,temps_cpu_lc);       
+
+        fprintf(file_titres,"%s %f %f\n", auteurs[i], temps_cpu_lc, temps_cpu_h);       
     }
 
     liberer_biblio_lc(biblio_lc);
     liberer_biblio_h(biblio_h);
     fclose(file_numeros);
-    fclose(file_livres);
+    fclose(file_titres);
     fclose(file_auteurs);
     return 0;
 }

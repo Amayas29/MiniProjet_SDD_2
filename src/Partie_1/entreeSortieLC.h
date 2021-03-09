@@ -1,5 +1,5 @@
-#ifndef __ENTRE_SORTIE_H__
-#define __ENTRE_SORTIE_H__
+#ifndef __ENTRE_SORTIE_LC_H__
+#define __ENTRE_SORTIE_LC_H__
 
 #include "biblioLC.h"
 
