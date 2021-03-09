@@ -9,12 +9,14 @@
 
 int main(void) {
 
+    //on cree une bibliotheque (liste de livre)
     Biblio *biblio_lc = charger_n_entrees_lc("../../ressources/GdeBiblio.txt", 1000);
     if(!biblio_lc) {
         print_probleme("Erreur de chargement");
         return 1;
     }
 
+    //on cree une bibliotheque (table de hashage)
     BiblioH *biblio_h = charger_n_entrees_h("../../ressources/GdeBiblio.txt", 1000, 1000);
     if(!biblio_h) {
         print_probleme("Erreur de chargement");
@@ -22,6 +24,7 @@ int main(void) {
         return 1;
     }
 
+    //ouverture d'un fichier ou on et les resultat des temps de la recherche par numero des deux bibliotheque
     FILE *file_numeros = fopen("file_numeros.log", "w");
     if(!file_numeros) {
         print_probleme("Erreur de chargement");
@@ -30,6 +33,8 @@ int main(void) {
         return 1;
     }
 
+
+    //ouverture d'un fichier ou on et les resultat des temps de la recherche par titre des deux bibliotheque
     FILE *file_titres = fopen("file_titres.log", "w");
     if(!file_titres) {
         print_probleme("Erreur de chargement");
@@ -39,6 +44,7 @@ int main(void) {
         return 1;
     }
 
+    //ouverture d'un fichier ou on et les resultat des temps de la recherche par auteur des deux bibliotheque
     FILE *file_auteurs = fopen("file_auteurs.log", "w");
     if(!file_auteurs) {
         print_probleme("Erreur de chargement");
@@ -49,11 +55,13 @@ int main(void) {
         return 1;
     }
 
+    
     clock_t temps_initial;
     clock_t temps_final;
     double temps_cpu_lc;
     double temps_cpu_h;
     
+    //tableau constant des numero de livre a rechercher
     int numeros[] = {
            1,   25,  198,     23,   49,
          190,  356,  897,      2,    10,
@@ -61,8 +69,11 @@ int main(void) {
         3648, 9894,  7848,  4765,  9384
     };
 
+         
+    //on calcule le temps que la recherche par numero prend pour les deux bibliotheque et on l'insere dans le fichier
     for (int i = 0; i < 20; i++) {
-
+   
+        
         temps_initial = clock();
         rechercher_biblio_numero_lc(biblio_lc, numeros[i]);
         temps_final = clock();
@@ -78,6 +89,7 @@ int main(void) {
 
     // ------------------------------------------------------------------------------
    
+   //tableau constant des titres de livre a rechercher
     char *titres[] = {
            "CPQIUDQPNYLN", "FWKHOPKMCOQHNWNKUE",       "BUDPEHDMF", "KMLNOZJKPQPXR0", "IOHORDTQKVWC", 
         "SOTBUXEHOYCHIFS",     "LNQIIEZHIBHAIV", "TYXBGJZUMLLPXD0",           "FLDE",     "SKLUZUWS",
@@ -85,6 +97,7 @@ int main(void) {
                   "OIHPS",         "ALZNPMKLNS",      "POJOIBAAXA",      "KHJBVIUAW", "WMLOPAWPO"
     };
 
+    //on calcule le temps que la recherche par numero prend pour les deux bibliotheque et on l'insere dans le fichier
     for (int i = 0; i < 20; i++) {   
 
         temps_initial = clock();
@@ -102,6 +115,7 @@ int main(void) {
 
     // ------------------------------------------------------------------------------
     
+    //tableau constant des auteurs de livre a rechercher
     char *auteurs[] = {
             "zrlkosnu",    "qnrajro", "efsarcbynecd", "wxwtwheibqv",  "aijvwcyau",
         "orxxvrwctdsn",  "ffewggftw",      "gwofojj",  "selsftsedu", "nxcxmjcxoh",
@@ -112,6 +126,7 @@ int main(void) {
     Biblio *biblio_search = NULL;
     LivreH *livre_liste_h = NULL;
 
+    //on calcule le temps que la recherche par numero prend pour les deux bibliotheque et on l'insere dans le fichier
     for (int i = 0; i < 20; i++) {   
 
         temps_initial = clock();
@@ -130,7 +145,8 @@ int main(void) {
 
         fprintf(file_titres,"%s %f %f\n", auteurs[i], temps_cpu_lc, temps_cpu_h);       
     }
-
+    
+    //on libere toutes les structure allouer
     liberer_biblio_lc(biblio_lc);
     liberer_biblio_h(biblio_h);
     fclose(file_numeros);
