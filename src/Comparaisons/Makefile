@@ -1,6 +1,6 @@
 CFLAGS = -Wall -g
 CC = gcc
-PROGS = comparer compare_hach
+PROGS = comparer compare_hach comparer_exemplaires
 
 all : $(PROGS)
 
@@ -28,6 +28,13 @@ compare_hach : compare_hach.o biblioH.o entreeSortieHach.o
 
 compare_hach.o: compare_hach.c ../commun.h ../Partie_2/biblioH.h  ../Partie_2/entreeSortieHach.h
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+comparer_exemplaires : comparer_exemplaires.o biblioLC.o entreeSortieLC.o biblioH.o entreeSortieHach.o
+	$(CC) $(CFLAGS) -o $@  $^
+
+comparer_exemplaires.o : comparer_exemplaires.c ../commun.h ../Partie_1/biblioLC.h ../Partie_1/entreeSortieLC.h ../Partie_2/biblioH.h  ../Partie_2/entreeSortieHach.h
+	$(CC) $(CFLAGS) -o $@ -c $<
+
 
 plot_numeros:
 	gnuplot -p < commande_plot_numeros.txt
