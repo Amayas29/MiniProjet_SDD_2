@@ -144,12 +144,12 @@ Biblio *rechercher_biblio_auteur_lc(Biblio *biblio, char *auteur) {
         print_probleme("Pointeur non valide");
         return NULL;
     }
-    // on cree une nouvelle biblioteque (qui est une liste de livre) pour stoquer les livres trouver
+    // on cree une nouvelle bibliotheque (qui est une liste de livre) pour stoquer les livres trouver
     Biblio *new = creer_biblio_lc();
     if(!new)
         return NULL;
     
-    //on cherche les livres par leur auteur et on les ajoute dans la biblioteque cree
+    //on cherche les livres par leur auteur et on les ajoute dans la bibliotheque cree
     for(Livre *livre = biblio->livres; livre; livre = livre->suiv) {
         if(strcmp(livre->auteur, auteur) == 0)
             inserer_en_tete_lc(new, livre->num, livre->titre, livre->auteur);
@@ -208,7 +208,7 @@ void fusion_biblios_lc(Biblio *dest, Biblio *src) {
     }
 
     int add;
-    //on parcoure les deux biblioteque on ajoute les element  de la deuxieme a la premiere si il n'existent pas 
+    //on parcoure les deux bibliotheque on ajoute les element  de la deuxieme a la premiere si il n'existent pas 
     for(Livre *livre = src->livres; livre; livre = livre->suiv) {
         add = 1;
         for(Livre *tete = dest->livres; tete; tete = tete->suiv) {
@@ -220,7 +220,7 @@ void fusion_biblios_lc(Biblio *dest, Biblio *src) {
         if(add)
             inserer_en_tete_lc(dest, livre->num, livre->titre, livre->auteur);
     }
-    //on libere la deuxieme biblioteque 
+    //on libere la deuxieme bibliotheque 
     liberer_biblio_lc(src);
 }
 

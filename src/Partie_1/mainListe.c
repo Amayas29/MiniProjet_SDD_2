@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    //on libere la biblioteque
+    //on libere la bibliotheque
     liberer_biblio_lc(biblio);
     printf("\n\t ** Merci au revoir\n");
     return 0;
