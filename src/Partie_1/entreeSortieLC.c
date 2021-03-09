@@ -14,7 +14,7 @@ Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes) {
         return NULL;
     }
 
-    //on cree une biblioteque
+    //on cree une bibliotheque
     Biblio *biblio = creer_biblio_lc();
     if(!biblio) {
         fclose(file);
@@ -26,7 +26,7 @@ Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes) {
     char titre[256];
     char auteur[256];
     /*
-    on parcoure le fichier et on ajoute les nombre de ligne lu dans le fichier dans une biblioteque 
+    on parcoure le fichier et on ajoute les nombre de ligne lu dans le fichier dans une bibliotheque 
     la boucle s'arrete si on a atteint le nombre de ligne demander ou la fin du fichier
     */
     for(int ligne = 0; ligne < nombre_lignes && fgets(BUFFER, 512, file); ligne++) {
@@ -39,7 +39,7 @@ Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes) {
             return NULL;
         }
         /*
-        si la lecture des données dans une ligne est bien passé on les insert dans la biblioteque
+        si la lecture des données dans une ligne est bien passé on les insert dans la bibliotheque
         la fonction inserer cree un livre en utilisant les données lu
         */
         inserer_en_tete_lc(biblio, numero, titre, auteur);
@@ -61,7 +61,7 @@ void enregister_biblio_lc(Biblio *biblio, char *nomfic) {
         print_probleme("Erreur d'ouverture du fichier");
         return;
     }
-    //on parcoure tout les livres de la biblioteque et on les ajoute au fichier
+    //on parcoure tout les livres de la bibliotheque et on les ajoute au fichier
     for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
         fprintf(file, "%d %s %s\n", livre->num, livre->titre, livre->auteur);
     

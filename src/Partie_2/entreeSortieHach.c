@@ -5,13 +5,13 @@
 #include "entreeSortieHach.h"
 
 BiblioH *charger_n_entrees_h(char *nomfic, int nombre_lignes, int taille) {
-
+    //on ouvre le fichier par lecture
     FILE *file = fopen(nomfic, "r");
     if(!file) {
         print_probleme("Erreur d'ouverture du fichier");
         return NULL;
     }
-
+    //on cree une bibliotheque 
     BiblioH *biblio = creer_biblio_h(taille);
     if(!biblio) {
         fclose(file);
