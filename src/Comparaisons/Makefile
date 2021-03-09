@@ -48,5 +48,8 @@ plot_auteurs:
 plot_compare_hash:
 	gnuplot -p < commande_plot_compare_hach.txt
 
+plot_compare_exemplaires:
+	gnuplot -p < commande_plot_exemplaires.txt
+
 clean :
 	rm -f *.o $(PROGS) *.ps *.log
