@@ -2,5 +2,5 @@ set title "Les temps de calculs en fonction de la taille de table de hachage"
 set xrange [-100:]
 plot "file_hach.log" u 1:2 with lines title "Temps cpu = f(taille)" linecolor rgb "green"
 set term postscript portrait
-set output "histo_hach.ps"
+set output "compare_hash.ps"
 set size 0.7, 0.7
