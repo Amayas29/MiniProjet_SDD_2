@@ -26,12 +26,12 @@ Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes) {
     char titre[256];
     char auteur[256];
     /*
-    on parcoure le fichier et on ajoute les nombre de ligne lu dans le fichier dans une bibliotheque 
+    on parcours le fichier et on ajoute les nombre de ligne lu dans le fichier dans une bibliotheque 
     la boucle s'arrete si on a atteint le nombre de ligne demander ou la fin du fichier
     */
     for(int ligne = 0; ligne < nombre_lignes && fgets(BUFFER, 512, file); ligne++) {
 
-        //on teste si on a bien lu 3 données sur une ligne, sionon on desaloue tout les structure allouer et on return null
+        //on teste si on a bien lu 3 données sur une ligne, sionon on desaloue tous les structure allouer et on return null
         if(sscanf(BUFFER, "%d %s %s\n", &numero, titre, auteur) != 3) {
             print_probleme("Erreur de lecture depuis le fichiers");
             fclose(file);
@@ -61,7 +61,7 @@ void enregister_biblio_lc(Biblio *biblio, char *nomfic) {
         print_probleme("Erreur d'ouverture du fichier");
         return;
     }
-    //on parcoure tout les livres de la bibliotheque et on les ajoute au fichier
+    //on parcours tous les livres de la bibliotheque et on les ajoute au fichier
     for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
         fprintf(file, "%d %s %s\n", livre->num, livre->titre, livre->auteur);
     
