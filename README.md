@@ -470,7 +470,7 @@ int existe_h(BiblioH *biblio, int numero, char *titre, char *auteur);
 
 - Explication des resultat:
 
-On remarque que la recherche selon le numero du livre en utilisant la liste est plus performante que la table de hashage parce que la fonction de hashage ne prend pas en compte le numero du livre mais son auteur donc pour rechercher un livre on doit parcourir toutes les case du tableau et pour chaque case on  parcours sa liste de livres en utilisant la table de hashage donc on aura une complexite de O(n) (plus précisément O(n*alpha) ou n est la taille du tableu de la table et alpha est la moyenne de nombre d'elements dans une liste), par contre en utilisant la liste on parcours les elements un a un pour la recherche donc on aura un O(n) comme complexite qui est un peu mieux que la table  
+On remarque que la recherche selon le numero du livre en utilisant la liste est plus performante que la table de hashage parce que la fonction de hashage ne prend pas en compte le numero du livre mais son auteur donc pour rechercher un livre on doit parcourir toutes les case du tableau et pour chaque case on parcours sa liste de livres  donc on aura une complexite de O(n) (plus précisément O(n*alpha) ou n est la taille du tableau de la table et alpha est la moyenne de nombre d'elements dans une liste), par contre en utilisant la liste on parcours les elements un à un pour la recherche donc on aura un O(n) comme complexite qui est un peu mieux que la table  
 
 -__Selon les titres__:
 
@@ -510,6 +510,13 @@ On a utiliser une boucle de 1 jusqu'a 10000 et on cree a chaque fois une table d
 
 ### Q 3.3
 
+- Explication de l'algorithme utiliser
+On a utiliser une boucle de 1000 jusqu'a 50000 en ajoutant a chaque fois 1000 a l'indice ou on charge depuis le fichier des livres le nombre d'element correspond a l'indice de a boucle dans les deu bibliotheque et on fait une recherche des livres exemplaires et on calcule la complexité des deux recherches pour les mettre dans un fichier
+
 ![graphe de comparaison entre la liste des livres et la fonction de hashage](ressources/Images/compare_hach_1000_lignes.png)
 
 ![graphe de comparaison entre la liste des livres et la fonction de hashage](ressources/Images/compare_hach_10000_lignes.png)
+
+## Q 3.4
+
+-Explication des resultat
