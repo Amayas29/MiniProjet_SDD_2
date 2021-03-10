@@ -256,6 +256,7 @@ int suppression_ouverage_h(BiblioH *biblio, int numero, char *titre, char *auteu
     if(livres->num == numero && strcmp(livres->titre, titre) == 0) {
         biblio->tab[indice] = biblio->tab[indice]->suivant;
         liberer_livre_h(livres);
+        biblio->nombresElems--;
         return 1;
     }
 
@@ -271,6 +272,7 @@ int suppression_ouverage_h(BiblioH *biblio, int numero, char *titre, char *auteu
         supp = livres->suivant;
         livres->suivant = supp->suivant;
         liberer_livre_h(supp);
+        biblio->nombresElems--;
         return 1;
     }
 
