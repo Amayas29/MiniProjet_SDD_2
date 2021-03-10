@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     LivreH *liste = NULL;
     
     /*
-    on cree a chaque fois un bibliotheque (hash table) de taille dynamique 
+    on cree a chaque fois un bibliotheque (hach table) de taille dynamique 
     selon l'indice de la boucle et on fait le calcule le temps de la recherche 
     */
     for(int taille = 1; taille <= NB_ITERATION; taille++) {

@@ -16,7 +16,7 @@ int main(void) {
         return 1;
     }
 
-    //on cree une bibliotheque (table de hashage)
+    //on cree une bibliotheque (table de hachage)
     BiblioH *biblio_h = charger_n_entrees_h("../../ressources/GdeBiblio.txt", 100000, 100000);
     if(!biblio_h) {
         print_probleme("Erreur de chargement");

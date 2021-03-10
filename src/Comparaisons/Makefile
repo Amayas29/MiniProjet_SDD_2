@@ -45,7 +45,7 @@ plot_titres:
 plot_auteurs:
 	gnuplot -p < commande_plot_auteurs.txt
 
-plot_compare_hash:
+plot_compare_hach:
 	gnuplot -p < commande_plot_compare_hach.txt
 
 plot_compare_exemplaires:

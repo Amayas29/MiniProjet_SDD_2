@@ -209,7 +209,7 @@ void menu_recherche();
 //permet d'afficher le menu pour choisir le flux de sortie pour l'enregistrement
 void menu_output();
 
-//permt de tester les message utilisateur pour les menu en s'assurant de la bonne saisie 
+//permet de tester les message utilisateur pour les menu en s'assurant de la bonne saisie 
 int get_choix(int min, int max);
 
 //permet de recuperer un entier en affichant un message
@@ -314,7 +314,7 @@ int main(int argc, char **argv) {
 
 > La structure `LivreH` qui represente une liste de livres telle que un livre est definie comme la structure precedente avec une clef en plus
 
-> la structure `BiblioH` qui represente une table de hashage des livres
+> la structure `BiblioH` qui represente une table de hachage des livres
 
 ```c
 // La structure d'un livre
@@ -376,7 +376,7 @@ void liberer_biblio_h(BiblioH *biblio);
 
 - Description des fonctions:
 
-> pour la creation d'une bibliotheque sous forme d'une table de hashage on alloue la structure elle meme le tableau et initialise toutes les case du tableau à NULL
+> pour la creation d'une bibliotheque sous forme d'une table de hachage on alloue la structure elle meme le tableau et initialise toutes les case du tableau à NULL
 
 > Pour la liberation on doit liberer toutes les cases (listes de livres) de la table et apres liberer la table et la structure
 
@@ -409,7 +409,7 @@ void inserer_h(BiblioH *biblio, int num, char *titre, char *auteur);
 
 - Desctiption de la fonction:
 
-> À chaque insertion on cree un livre et on calcule la clef du livre et on l'insere dans la case qui lui corespond dans la table de hashage
+> À chaque insertion on cree un livre et on calcule la clef du livre et on l'insere dans la case qui lui corespond dans la table de hachage
 
 ### Q 2.6
 
@@ -464,26 +464,26 @@ int existe_h(BiblioH *biblio, int numero, char *titre, char *auteur);
 
 - __Selon les numeros__:
 
-- Le graphe de calcule selon les numeros:
+- Le graphe de recherche selon les numeros:
 
 ![graphe de recherche par numero](ressources/Images/recherche_numeros.png)
 
 - Explication des resultat:
 
-On remarque que la recherche selon le numero du livre en utilisant la liste est plus performante que la table de hashage parce que la fonction de hashage ne prend pas en compte le numero du livre mais son auteur donc pour rechercher un livre on doit parcourir toutes les case du tableau et pour chaque case on parcours sa liste de livres  donc on aura une complexite de O(n) (plus précisément O(n*alpha) ou n est la taille du tableau de la table et alpha est la moyenne de nombre d'elements dans une liste), par contre en utilisant la liste on parcours les elements un à un pour la recherche donc on aura un O(n) comme complexite qui est un peu mieux que la table  
+On remarque que la recherche selon le numero du livre en utilisant la liste est plus performante que la table de hachage parce que la fonction de hachage ne prend pas en compte le numero du livre mais son auteur donc pour rechercher un livre on doit parcourir toutes les case du tableau et pour chaque case on parcours sa liste de livres  donc on aura une complexite de O(n) (plus précisément O(m*alpha) ou m est la taille du tableau de la table et alpha est la moyenne de nombre d'elements dans une liste), par contre en utilisant la liste on parcours les elements un à un pour la recherche donc on aura un O(n) comme complexite, mais ce qui rend les listes plus performante que la table de hachage c'est que dans la table de hachage on accéde d'abord à les cases du tableau avant de parcourir la liste c'est un calcul en plus
 
 -__Selon les titres__:
 
-- Le graphe de calcule selon les titres:
+- Le graphe de recherche selon les titres:
 
 ![graphe de recherche par titre](ressources/Images/recherche_titres.png)
 
 - Explication des resultat:
 
-On remarque que la recherche selon le titre du livre est un peu pres la meme chose que la rechrche par numero vu qu'on doit parcourir toute la table de hashage et toute la liste des livres pour les deux bibliotheque
-car la fonction de hashage depend que du nom d'auteur des livres
+On remarque que la recherche selon le titre du livre est un peu pres la meme chose que la recherche par numero vu qu'on doit parcourir toute la table de hachage et toute la liste des livres pour les deux bibliotheque
+car la fonction de hachage depend que du nom d'auteur des livres
 
--__Selon les auteurs__:
+- __Selon les auteurs__:
 
 - Le graphe de calcule selon les auteurs:
 
@@ -491,32 +491,62 @@ car la fonction de hashage depend que du nom d'auteur des livres
 
 - Explication des resultat:
 
-On remarque que la recherche selon l'auteur des livres est beaucoup plus puissante en utilisant la table de hashage car on accede directement a la position ou se trouve les livre de cet auteur sans parcourire le tableau en calculant l'indice de cette case avec la fonction de hashage apres on cherche dans la liste associé a la case les livres ecrits par l'auteur rechercher et ca sa donne une complexité de O(1) (plus precisement O(alpha) d'ou aplpha est le nombre de livre present dans la liste associé a la case), alors qu'on utilisant la liste on a un complexité de O(n) qui est largement moins bonne que O(1
+On remarque que la recherche selon l'auteur des livres est beaucoup plus puissante en utilisant la table de hachage car on accede directement a la position ou se trouve les livre de cet auteur sans parcourir le tableau, en calculant l'indice de cette case avec la fonction de hachage apres on cherche dans la liste associé à la case les livres ecrits par l'auteur recherché et ca donne une complexité de O(1) (plus precisement O(alpha) d'ou alpha est le nombre de livres présent dans la liste associé a la case), alors qu'on utilisant la liste on a un complexité de O(n) qui est largement moins bonne que O(1)
 
 ### Q 3.2
 
+*NB : Pour les graphes on a déplacer un peu le 0 des abscisses pour avoir un affichage lisible)
+
 - Description de l'algorithme
-On a utiliser une boucle de 1 jusqu'a 10000 et on cree a chaque fois une table de taille de l'indice de la table, on effectue une recherche de livre par auteur pour voir la difference vu que la table est ranger selon l'auteur
+  
+On a utiliser une boucle de 1 jusqu'a 10000 et on cree a chaque fois une table de taille de l'indice de la boucle, on effectue une recherche de livre par auteur pour voir la difference vu que la table de hachage est ranger selon l'auteur (la fonction de hachage dépend de l'auteur)
 
-- Le graghe correspont a la comparaison selon la taille de table de hashage:
+*Donc on a décider d'expoilter ce point pour les comparaisons, car la recherche avec les titres et avec le numéros on aura des résultats constants car c'est un parcours de toute la bibliotheque*
 
-![graphe de comparaison en lisant 1000 livres du fichier](ressources/Images/compare_hach_1000_lignes.png)
+**On a tout de même effectue la recherche avec les titres pour illustrer notre explication**
 
-![graphe de comparaison en lisant 10000 livres du fichier](ressources/Images/compare_hach_10000_lignes.png)
+![Recherche titres](ressources/Images/compare_hach_titres.png)
+
+>> On voit bien c'est presque constant, c'est pour ça qu'on a favorisé la recherche avec les auteurs, et voici les graphes obtenus
+
+- Le graghe correspondant à la recherche selon l'auteur en lisant `10000` lignes du fichier :
+
+![graphe de comparaison en lisant 1000 livres du fichier](ressources/Images/compare_hach_10000_lignes.png)
+
+- Le graghe correspondant à la recherche selon l'auteur en lisant `100000` lignes du fichier :
+
+![graphe de comparaison en lisant 10000 livres du fichier](ressources/Images/compare_hach_100000_lignes.png)
+
 
 - Explication des resultats:
 
-> On remarque que a chaque fois qu'on augmente de le taille du tableau de la fonction de hashage le temps pris par le processeur deminue donc la complexité devient de plus en plus mieux car on aura moins de case a parcourir surtout apres les premiere iteration, apres le graphe devient de plus en plus constant car la fonction de hashage trouve toujours le meme clef vu qu'on change que le nombre d'element donc on change que le modulo
+> On remarque que à chaque fois qu'on augmente la taille du tableau de la table de hachage le temps pris par le processeur deminue donc la complexité devient de plus en plus mieux car on aura moins de case a parcourir surtout apres les premieres iterations, apres la courbe devient de plus en plus constante
+
+> Car au debut avec des valeurs petites pour la taille on aura des listes qui ont plusieurs élements donc la recherche tend vers du O(n) mais aprés on aura une bonne répartition dans les listes donc on aura moins à parcourir (la complexité va devenir du O(alpha) ce qui rend les résultats beaucoup plus meilleurs) 
 
 ### Q 3.3
 
-- Explication de l'algorithme utiliser
+- Explication de l'algorithme utilisé
+
 On a utiliser une boucle de 1000 jusqu'a 50000 en ajoutant a chaque fois 1000 a l'indice ou on charge depuis le fichier des livres le nombre d'element correspond a l'indice de a boucle dans les deu bibliotheque et on fait une recherche des livres exemplaires et on calcule la complexité des deux recherches pour les mettre dans un fichier
 
-![graphe de comparaison entre la liste des livres et la fonction de hashage](ressources/Images/compare_hach_1000_lignes.png)
+*On incremente de 1000 à chaque fois, car avec incrémentation de 1 ça risque de prendre beaucoup de temps car nos fonction de recherches d'exemplaire sont quadratiques pour les liste en O(n²) pour la table de hachage en O(m * alpha²)*
 
-![graphe de comparaison entre la liste des livres et la fonction de hashage](ressources/Images/compare_hach_10000_lignes.png)
+- Le graphe obtenu avec une boucle de 1000 à 50000 avec un pas de 1000 
+
+![graphe de comparaison entre la liste des livres et la fonction de hachage](ressources/Images/exemplaires_50000.png)
+
+*Si on zoome un peu (donc avec un pas de 1 pour plus de précision on aura un résultat plus précis)*
+
+- Le graphe obtenu avec une boucle de 1000 à 9000 avec un pas de 1 
+
+![graphe de comparaison entre la liste des livres et la fonction de hachage](ressources/Images/exemplaires_9000.png)
+
 
 ## Q 3.4
 
--Explication des resultat
+- Explication des resultats : 
+
+> On remarque que le temps de recherche d'exemplaire avec les liste est largement plus grand que celui avec la table de hachage ce qui s'explique avec les complexité, en effet la complexité de recherche avec les liste est en O(n²) car on fait un double parcours sur toute la liste tandis que c'est en O(m * alpha²) pour la table de hachage avec m c'est la taille du tableau et alpha c'est la moyenne des tailles des listes qui est constant donc la complexité devient que du O(m) qui est bien plus performant que du O(n²)
+
+> Pour la recherche avec la table de hachage vu que on sait que tous les ouverages d'un auteur se trouvent dans une seule case du tableau donc il suffit que de parcourir la liste correspondante à l'indice obtenu donc moins d'élements à parcourir que dans les listes où on doit parcourir tous les livres

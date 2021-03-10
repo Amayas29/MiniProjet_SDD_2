@@ -12,7 +12,7 @@ void menu_recherche();
 //permet d'afficher le menu pour choisir le flux de sortie pour l'enregistrement
 void menu_output();
 
-//permt de tester les message utilisateur pour les menu en s'assurant de la bonne saisie 
+//permet de tester les message utilisateur pour les menu en s'assurant de la bonne saisie 
 int get_choix(int min, int max);
 
 //permet de recuperer un entier en affichant un message
