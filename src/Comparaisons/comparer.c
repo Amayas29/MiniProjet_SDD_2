@@ -10,14 +10,14 @@
 int main(void) {
 
     //on cree une bibliotheque (liste de livre)
-    Biblio *biblio_lc = charger_n_entrees_lc("../../ressources/GdeBiblio.txt", 1000);
+    Biblio *biblio_lc = charger_n_entrees_lc("../../ressources/GdeBiblio.txt", 100000);
     if(!biblio_lc) {
         print_probleme("Erreur de chargement");
         return 1;
     }
 
     //on cree une bibliotheque (table de hashage)
-    BiblioH *biblio_h = charger_n_entrees_h("../../ressources/GdeBiblio.txt", 1000, 1000);
+    BiblioH *biblio_h = charger_n_entrees_h("../../ressources/GdeBiblio.txt", 100000, 100000);
     if(!biblio_h) {
         print_probleme("Erreur de chargement");
         liberer_biblio_lc(biblio_lc);
@@ -65,8 +65,8 @@ int main(void) {
     int numeros[] = {
            1,   25,  198,     23,   49,
          190,  356,  897,      2,    10,
-        1029, 1893, 26387, 38942, 18937,
-        3648, 9894,  7848,  4765,  9384
+        124029, 189233, 263807, 238942, 2389427,
+        23783242, 2309827,  1231334,  8971373,  56236723
     };
 
          
