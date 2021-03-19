@@ -3,7 +3,7 @@
 
 #include "biblioLC.h"
 
-//permet de charger une bibliotheque de nombre de livres donnée en parametre a partir d'un fichier 
+//permet de charger une bibliotheque de nombre de livres donnée en parametre a partir d'un fichier
 Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes);
 
 //permet de sauvgarder une bibliotheque dans un ficher

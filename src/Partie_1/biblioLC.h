@@ -45,7 +45,7 @@ Biblio *rechercher_biblio_auteur_lc(Biblio *biblio, char *auteur);
 //permet de supprimer un ouvrage dans une bibliotheque
 int suppression_ouverage_lc(Biblio *biblio, int numero, char *titre, char *auteur);
 
-//permet de fusionner deux bblioteque 
+//permet de fusionner deux bblioteque
 void fusion_biblios_lc(Biblio *src, Biblio *dest);
 
 //permet de trouver tous les livres qui ont des exemplaire dans une bibliotheque

@@ -1,19 +1,19 @@
-#include <stdlib.h>
-#include <string.h>
-#include "../commun.h"
 #include "biblioLC.h"
 
+#include <stdlib.h>
+#include <string.h>
+
+#include "../commun.h"
 
 Livre *creer_livre_lc(int num, char *titre, char *auteur) {
-    
-    if(!titre || !auteur) {
+    if (!titre || !auteur) {
         print_probleme("Pointeur non valide");
         return NULL;
     }
 
-    //on alloue la structure 
-    Livre *livre = (Livre *) malloc(sizeof(Livre));
-    if(!livre) {
+    //on alloue la structure
+    Livre *livre = (Livre *)malloc(sizeof(Livre));
+    if (!livre) {
         print_probleme("Erreur d'allocation");
         return NULL;
     }
@@ -27,8 +27,7 @@ Livre *creer_livre_lc(int num, char *titre, char *auteur) {
 }
 
 void liberer_livre_lc(Livre *livre) {
-
-    if(!livre)
+    if (!livre)
         return;
     //on libere les pointeurs et le livre
     free(livre->titre);
@@ -37,21 +36,19 @@ void liberer_livre_lc(Livre *livre) {
 }
 
 void afficher_livre_lc(Livre *livre) {
-
-      if(!livre) {
+    if (!livre) {
         print_probleme("Pointeur non valide");
         return;
     }
-    
+
     printf("\t >> %d %s %s\n", livre->num, livre->titre, livre->auteur);
 }
 
 Biblio *creer_biblio_lc() {
-    
     //on alloue la structure Biblio
-    Biblio *biblio = (Biblio *) malloc(sizeof(Biblio));
+    Biblio *biblio = (Biblio *)malloc(sizeof(Biblio));
 
-    if(!biblio) {
+    if (!biblio) {
         print_probleme("Erreur d'allocation");
         return NULL;
     }
@@ -62,53 +59,48 @@ Biblio *creer_biblio_lc() {
 }
 
 void liberer_biblio_lc(Biblio *biblio) {
-
-    if(!biblio)
+    if (!biblio)
         return;
 
-    Livre *tmp = NULL; 
-    //on libere la memoire de tous les elements de la liste 
-    while(biblio->livres) {
+    Livre *tmp = NULL;
+    //on libere la memoire de tous les elements de la liste
+    while (biblio->livres) {
         tmp = biblio->livres->suiv;
         liberer_livre_lc(biblio->livres);
         biblio->livres = tmp;
     }
-    
-    
+
     free(biblio);
 }
 
 void inserer_en_tete_lc(Biblio *biblio, int num, char *titre, char *auteur) {
-    
-    if(!biblio) {
+    if (!biblio) {
         print_probleme("Pointeur non valide");
         return;
     }
 
     //on cree un livre
     Livre *livre = creer_livre_lc(num, titre, auteur);
-    if(!livre)
+    if (!livre)
         return;
-    //on insert le livre en tete de liste 
+    //on insert le livre en tete de liste
     livre->suiv = biblio->livres;
     biblio->livres = livre;
 }
 
 void afficher_biblio_lc(Biblio *biblio) {
-    
-    if(!biblio) {
+    if (!biblio) {
         print_probleme("Pointeur non valide");
         return;
     }
 
-    //on parcours tous les livres et on les affiche 
-    for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
+    //on parcours tous les livres et on les affiche
+    for (Livre *livre = biblio->livres; livre; livre = livre->suiv)
         afficher_livre_lc(livre);
 }
 
 Livre *rechercher_biblio_numero_lc(Biblio *biblio, int numero) {
-    
-    if(!biblio) {
+    if (!biblio) {
         print_probleme("Pointeur non valide");
         return NULL;
     }
@@ -119,39 +111,37 @@ Livre *rechercher_biblio_numero_lc(Biblio *biblio, int numero) {
     */
     Livre *livre = biblio->livres;
     //on fait l'initialisation avant la boucle for pour recuperer le livre
-    for(; livre && livre->num != numero; livre = livre->suiv);
+    for (; livre && livre->num != numero; livre = livre->suiv) continue;
 
     return livre;
 }
 
 Livre *rechercher_biblio_titre_lc(Biblio *biblio, char *titre) {
-
-    if(!biblio) {
+    if (!biblio) {
         print_probleme("Pointeur non valide");
         return NULL;
     }
 
     //on parcours tant qu'on trouve pas l'element, et on returne le livre si il existe sinon null
     Livre *livre = biblio->livres;
-    for(; livre && strcmp(livre->titre, titre) != 0; livre = livre->suiv);
+    for (; livre && strcmp(livre->titre, titre) != 0; livre = livre->suiv) continue;
 
     return livre;
 }
 
 Biblio *rechercher_biblio_auteur_lc(Biblio *biblio, char *auteur) {
-
-    if(!biblio) {
+    if (!biblio) {
         print_probleme("Pointeur non valide");
         return NULL;
     }
     // on cree une nouvelle bibliotheque (qui est une liste de livre) pour stoquer les livres trouver
     Biblio *new = creer_biblio_lc();
-    if(!new)
+    if (!new)
         return NULL;
-    
+
     //on cherche les livres par leur auteur et on les ajoute dans la bibliotheque cree
-    for(Livre *livre = biblio->livres; livre; livre = livre->suiv) {
-        if(strcmp(livre->auteur, auteur) == 0)
+    for (Livre *livre = biblio->livres; livre; livre = livre->suiv) {
+        if (strcmp(livre->auteur, auteur) == 0)
             inserer_en_tete_lc(new, livre->num, livre->titre, livre->auteur);
     }
 
@@ -159,20 +149,19 @@ Biblio *rechercher_biblio_auteur_lc(Biblio *biblio, char *auteur) {
 }
 
 static int compare_livres_lc(Livre *livre, int numero, char *titre, char *auteur) {
-    //returne si les deux livre sont egaux 
-    return livre && livre->num == numero && strcmp(livre->titre, titre) == 0 && strcmp(livre->auteur, auteur) == 0; 
+    //returne si les deux livre sont egaux
+    return livre && livre->num == numero && strcmp(livre->titre, titre) == 0 && strcmp(livre->auteur, auteur) == 0;
 }
 
 int suppression_ouverage_lc(Biblio *biblio, int numero, char *titre, char *auteur) {
-    
-    if(!biblio) {
+    if (!biblio) {
         print_probleme("Pointeur non valide");
         return 0;
     }
 
     Livre *curr = biblio->livres;
     //on teste si l'element est en tete de liste on le supprime et on returne true
-    if(compare_livres_lc(biblio->livres, numero, titre, auteur)) {
+    if (compare_livres_lc(biblio->livres, numero, titre, auteur)) {
         biblio->livres = curr->suiv;
         liberer_livre_lc(curr);
         return 1;
@@ -182,11 +171,10 @@ int suppression_ouverage_lc(Biblio *biblio, int numero, char *titre, char *auteu
     on parcours la liste (on utilise le suivant d'un element pour avoir le precedent qui est l'element lui meme)
     on sort de la boucle si l'element n'est pas trouver ou on est au dernier element de la liste
     */
-    for(; curr && !compare_livres_lc(curr->suiv, numero, titre, auteur); curr = curr->suiv);
+    for (; curr && !compare_livres_lc(curr->suiv, numero, titre, auteur); curr = curr->suiv) continue;
 
-    
     Livre *supp = NULL;
-    if(curr) {
+    if (curr) {
         //on recupere l'element a supprimer
         supp = curr->suiv;
         //on attache le precedent au suivant de l'element
@@ -201,59 +189,56 @@ int suppression_ouverage_lc(Biblio *biblio, int numero, char *titre, char *auteu
 }
 
 void fusion_biblios_lc(Biblio *dest, Biblio *src) {
-    
-    if(!dest || !src) {
+    if (!dest || !src) {
         print_probleme("Pointeur non valide");
         return;
     }
 
     int add;
-    //on parcours les deux bibliotheque on ajoute les elements  de la deuxieme a la premiere si il n'existent pas 
-    for(Livre *livre = src->livres; livre; livre = livre->suiv) {
+    //on parcours les deux bibliotheque on ajoute les elements  de la deuxieme a la premiere si il n'existent pas
+    for (Livre *livre = src->livres; livre; livre = livre->suiv) {
         add = 1;
-        for(Livre *tete = dest->livres; tete; tete = tete->suiv) {
-            if(compare_livres_lc(livre, tete->num, tete->titre, tete->auteur)) {
+        for (Livre *tete = dest->livres; tete; tete = tete->suiv) {
+            if (compare_livres_lc(livre, tete->num, tete->titre, tete->auteur)) {
                 add = 0;
                 break;
             }
         }
-        if(add)
+        if (add)
             inserer_en_tete_lc(dest, livre->num, livre->titre, livre->auteur);
     }
-    //on libere la deuxieme bibliotheque 
+    //on libere la deuxieme bibliotheque
     liberer_biblio_lc(src);
 }
 
 Biblio *rechercher_exemplaires_lc(Biblio *biblio) {
-
     Biblio *new_biblio = creer_biblio_lc();
 
-    if(!new_biblio)
+    if (!new_biblio)
         return NULL;
     //on parcours toute la liste deux fois et on teste si l'element a un exemplaire on l'ajoute a la liste
-    for(Livre *livre = biblio->livres; livre; livre = livre->suiv) {
-        for(Livre *suivant = biblio->livres; suivant; suivant = suivant->suiv) {
-            
-            if(suivant == livre)
+    for (Livre *livre = biblio->livres; livre; livre = livre->suiv) {
+        for (Livre *suivant = biblio->livres; suivant; suivant = suivant->suiv) {
+            if (suivant == livre)
                 continue;
-            
-            if(strcmp(livre->titre, suivant->titre) == 0 && strcmp(livre->auteur, suivant->auteur) == 0) {
+
+            if (strcmp(livre->titre, suivant->titre) == 0 && strcmp(livre->auteur, suivant->auteur) == 0) {
                 inserer_en_tete_lc(new_biblio, livre->num, livre->titre, livre->auteur);
                 break;
             }
         }
     }
-    //on returne la liste des exemplaire 
+    //on returne la liste des exemplaire
     return new_biblio;
 }
 
 int existe_lc(Biblio *biblio, int numero, char *titre, char *auteur) {
-    if(!biblio)
+    if (!biblio)
         return 0;
 
-    for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
-        if(compare_livres_lc(livre, numero, titre, auteur))
+    for (Livre *livre = biblio->livres; livre; livre = livre->suiv)
+        if (compare_livres_lc(livre, numero, titre, auteur))
             return 1;
-    
+
     return 0;
 }

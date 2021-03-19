@@ -24,7 +24,7 @@ int fonction_clef(char *auteur);
 int fonction_hachage(int cle, int taille);
 
 // Créer un livre à partir de son numéro, titre et auteur
-LivreH* creer_livre_h(int num, char *titre, char *auteur);
+LivreH *creer_livre_h(int num, char *titre, char *auteur);
 
 // Libere la mémoire alloué à un livre
 void liberer_livre_h(LivreH *livre);
@@ -53,13 +53,13 @@ void afficher_biblio_h(BiblioH *biblio);
 // Recherche un livre par son numero et le retourne si il existe
 LivreH *rechercher_biblio_numero_h(BiblioH *biblio, int numero);
 
-// Recherhce un livre par son titre et le retourne si il existe 
+// Recherhce un livre par son titre et le retourne si il existe
 LivreH *rechercher_biblio_titre_h(BiblioH *biblio, char *titre);
 
-// Recherhce tous les livres d'un auteur donné 
+// Recherhce tous les livres d'un auteur donné
 LivreH *rechercher_biblio_auteur_h(BiblioH *biblio, char *auteur);
 
-// Supprime un livre de la bibliotheque et retourne le resultat de la requette 
+// Supprime un livre de la bibliotheque et retourne le resultat de la requette
 int suppression_ouverage_h(BiblioH *biblio, int numero, char *titre, char *auteur);
 
 // Permet de fussionner deux bibliotheques

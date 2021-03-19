@@ -4,9 +4,9 @@
 #include "biblioH.h"
 
 //Permet de cree et de charger un bibliotheque d'un fichier
-BiblioH *charger_n_entrees_h(char *nomfic, int nombre_lignes ,int taille);
+BiblioH *charger_n_entrees_h(char *nomfic, int nombre_lignes, int taille);
 
-//Permet d'enregisterer une bibliotheue dans un fichier 
+//Permet d'enregisterer une bibliotheue dans un fichier
 void enregister_biblio_h(BiblioH *biblio, char *nomfic);
 
 //Permet d'enregisterer une liste de livres dans un fichier

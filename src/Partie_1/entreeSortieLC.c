@@ -1,22 +1,23 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "../commun.h"
-#include "biblioLC.h"
 #include "entreeSortieLC.h"
 
-Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes) {
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#include "../commun.h"
+#include "biblioLC.h"
+
+Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes) {
     //ouverture du fichier
     FILE *file = fopen(nomfic, "r");
-    if(!file) {
+    if (!file) {
         print_probleme("Erreur d'ouverture du fichier");
         return NULL;
     }
 
     //on cree une bibliotheque
     Biblio *biblio = creer_biblio_lc();
-    if(!biblio) {
+    if (!biblio) {
         fclose(file);
         return NULL;
     }
@@ -29,10 +30,9 @@ Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes) {
     on parcours le fichier et on ajoute les nombre de ligne lu dans le fichier dans une bibliotheque 
     la boucle s'arrete si on a atteint le nombre de ligne demander ou la fin du fichier
     */
-    for(int ligne = 0; ligne < nombre_lignes && fgets(BUFFER, 512, file); ligne++) {
-
+    for (int ligne = 0; ligne < nombre_lignes && fgets(BUFFER, 512, file); ligne++) {
         //on teste si on a bien lu 3 données sur une ligne, sionon on desaloue tous les structure allouer et on return null
-        if(sscanf(BUFFER, "%d %s %s\n", &numero, titre, auteur) != 3) {
+        if (sscanf(BUFFER, "%d %s %s\n", &numero, titre, auteur) != 3) {
             print_probleme("Erreur de lecture depuis le fichiers");
             fclose(file);
             liberer_biblio_lc(biblio);
@@ -50,20 +50,19 @@ Biblio *charger_n_entrees_lc(char *nomfic, int nombre_lignes) {
 }
 
 void enregister_biblio_lc(Biblio *biblio, char *nomfic) {
-
-    if(!biblio) {
+    if (!biblio) {
         print_probleme("Pointeur non valide");
         return;
     }
     // on ouvre e fichier en ecriture
     FILE *file = fopen(nomfic, "w");
-    if(!file) {
+    if (!file) {
         print_probleme("Erreur d'ouverture du fichier");
         return;
     }
     //on parcours tous les livres de la bibliotheque et on les ajoute au fichier
-    for(Livre *livre = biblio->livres; livre; livre = livre->suiv)
+    for (Livre *livre = biblio->livres; livre; livre = livre->suiv)
         fprintf(file, "%d %s %s\n", livre->num, livre->titre, livre->auteur);
-    
+
     fclose(file);
 }
